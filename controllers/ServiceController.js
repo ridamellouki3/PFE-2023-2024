@@ -55,6 +55,8 @@ const getServices = async (req, res, next) => {
       if (min || max) {filters.price = {};}
       if (min){ filters.price.$gt = min;}
       if (max) {filters.price.$lt = max;}
+
+      console.log(filters);
   
       const sortOptions = sort ? { [sort]: -1 } : {};
       const services = await Service.find(filters).sort(sortOptions);
