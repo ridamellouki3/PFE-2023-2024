@@ -41,10 +41,7 @@ const userSchema = new mongoose.Schema({
     enum:["client","Manager","Service Provider"],
     default:"client"
   }
-  //   isSeller: {
-  //   type: Boolean,
-  //   default:false
-  // }
+
 },{timestamps:true})
 
 userSchema.statics.login =async function (email,password){

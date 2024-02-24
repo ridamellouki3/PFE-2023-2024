@@ -5,11 +5,13 @@ mongoose.connect(process.env.DBURL);
 
 const reviewSchema = new mongoose.Schema( {
     serviceId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"User",
       required: true,
     },
     userId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"User",
       required: true,
     },
     star: {

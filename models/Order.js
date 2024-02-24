@@ -5,7 +5,8 @@ mongoose.connect(process.env.DBURL);
 
 const orderSchema = new mongoose.Schema( {
     serviceId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"User",
       required: true,
     },
     img: {
@@ -21,11 +22,13 @@ const orderSchema = new mongoose.Schema( {
       required: true,
     },
     serviceProviderId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"User",
       required: true,
     },
     clientId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"User",
       required: true,
     },
     time: {
