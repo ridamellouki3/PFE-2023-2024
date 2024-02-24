@@ -1,0 +1,51 @@
+const mongoose = require("mongoose");
+require("dotenv").config()
+mongoose.connect(process.env.DBURL);
+
+
+const orderSchema = new mongoose.Schema( {
+    serviceId: {
+      type: String,
+      required: true,
+    },
+    img: {
+      type: String,
+      required: false,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    serviceProviderId: {
+      type: String,
+      required: true,
+    },
+    clientId: {
+      type: String,
+      required: true,
+    },
+    time: {
+      type: Date,
+      required: true,
+    },
+    isCompleteService: {
+      type:Boolean,
+      default : false,
+    },
+    isCompleted: {
+      type: Boolean,
+      default: false,
+    },
+    payment_intent: {
+      type: String,
+      required: true,
+    },
+  },{timestamps: true,})
+
+  const Order = mongoose.model("Order",orderSchema)
+
+  module.exports = Order 
