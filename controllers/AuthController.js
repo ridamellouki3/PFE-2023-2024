@@ -27,6 +27,8 @@ const registre =   async (req,res,) => {
     }else{
       return res.status(500).json('You should upload an image!!')
     }
+    //Create a Salt(Random STring) for password hashing 
+    
     const salt = await bcrypt.genSalt(10);
     const hashedpass = await bcrypt.hash(req.body.password, salt);
     const user = await User.create({ ...req.body, password: hashedpass ,img : req.file.filename});

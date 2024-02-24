@@ -1,7 +1,7 @@
 const Categorie = require('../models/Categorie');
 
 
-const createCat = async (req,res) => {
+const createCategorie = async (req,res) => {
     const title  = req.body.name ;
     try {
         await Categorie.create({name:title})
@@ -29,6 +29,6 @@ const getCategories =async (req,res)=>{
 
 
 module.exports = {
-    createCat,getCategories
+    createCategorie,getCategories
 }
 

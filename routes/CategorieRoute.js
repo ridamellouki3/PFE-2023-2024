@@ -1,13 +1,13 @@
 const express = require("express");
 
 const {
-  createCat,
+  createCategorie,
   getCategories,
 } = require("../controllers/CategorieController");
 const router = express.Router()
 
 router.get('/',getCategories)
-router.post('/create',createCat);
+router.post('/',createCategorie);
 
 
 

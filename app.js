@@ -5,8 +5,8 @@ const conversationRoute = require("./routes/ConversationRoute");
 const serviceRoute = require("./routes/ServiceRoute");
 const messageRoute = require("./routes/MessageRoute");
 const categorieRouter = require("./routes/CategorieRoute")
-//const orderRoute = require("./routes/OrderRoute")
-//const reviewRoute = require("./routes/ReviewRoute");
+const orderRoute = require("./routes/OrderRoute");
+const reviewRoute = require("./routes/ReviewRoute");
 
 
 require("dotenv").config()
@@ -35,5 +35,5 @@ app.use('/api/conversations',conversationRoute)
 app.use("/api/services", serviceRoute)
 app.use("/api/messages",messageRoute)
 app.use("/api/categories",categorieRouter);
-// app.use("/api/orders", orderRoute)
-// app.use("/api/reviews", reviewRoute);
+app.use("/api/orders", orderRoute)
+app.use("/api/reviews", reviewRoute);
