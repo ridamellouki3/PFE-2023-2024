@@ -1,7 +1,7 @@
 const Service = require("../models/Service");
+const Categorie = require('../models/Categorie') 
 
-
-const createService = async (req, res, next) => {
+const createService = async (req, res) => {
   if (!req.role !== "Service Provider"){
     return res.status(403).json("Only sellers can create a Service!");
   }
@@ -12,10 +12,10 @@ const createService = async (req, res, next) => {
 
   try {
     const savedService = await newService.save();
-    res.status(201).json(savedService);
+    return res.status(201).json(savedService);
   } catch (err) {
-    console.log(err);
-    next(err);
+    console.log(err.message);
+    return res.status(500).json(err.message);
   }
 };
 const deleteService = async (req, res, next) => {
@@ -28,7 +28,7 @@ const deleteService = async (req, res, next) => {
     res.status(200).send("Service has been deleted!");
   } catch (err) {
     console.log(err)
-    next(err);
+    return res.status(500).json(err.message);
   }
 };
 const getService = async (req, res, next) => {
@@ -38,16 +38,20 @@ const getService = async (req, res, next) => {
     res.status(200).send(Service);
   } catch (err) {
     console.log(err);
-    next(err);
+    return res.status(500).json(err.message);
   }
 };
+
+//This is FOR A USER IF HE NEED TO SEARCH ABOUT A SERVICE 
 const getServices = async (req, res, next) => {
     try {
-      const { userId, cat, min, max, sort } = req.query;
+      const { userId, categorieId, min, max, sort } = req.query;
+
+      const categorie = await Categorie.findOne({name:cat});
 
       const filters = {};
       if (userId) {filters.userId = userId;}
-      if (cat) {filters.cat = cat;}
+      if (categorieId) {filters.categorieId = categorieId;}
       if (min || max) {filters.price = {};}
       if (min){ filters.price.$gt = min;}
       if (max) {filters.price.$lt = max;}
@@ -58,7 +62,7 @@ const getServices = async (req, res, next) => {
     res.status(200).send(services);
     } catch (error) {
      console.log(error);
-      next(error);
+     return res.status(500).json(err.message);
     }
   };
   

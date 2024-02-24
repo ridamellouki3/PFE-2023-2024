@@ -4,13 +4,12 @@ require("dotenv").config()
 const Stripe = require("stripe")(process.env.STRIPE_KEY)
 
 
-//create a payment intent .../........//..././././///..;..././.././././//..//...//././././;
+//create a payment intent;
 
 
 
 const intent = async (req, res) => {
   const service = await Service.findById(req.params.id);
-
   const paymentIntent = await Stripe.paymentIntents.create({
     amount: service.price,
     currency: "usd",

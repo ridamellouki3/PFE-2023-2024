@@ -4,10 +4,6 @@ const { getOrders, intent, confirm ,completeOrder } = require("../controllers/Or
 const router = express.Router()
 
 
-
-
-
-
 router.get("/", verifyToken, getOrders);
 router.post("/create-payment/:id", verifyToken, intent);
 router.patch("/", verifyToken, confirm);
