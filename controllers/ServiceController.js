@@ -2,8 +2,8 @@ const Service = require("../models/Service");
 const Categorie = require('../models/Categorie') 
 
 const createService = async (req, res) => {
-  if (req.role !== "Service Provider " && req.role !== "Manager"){
-    return res.status(403).json("Only sellers can create a Service!");
+  if (req.role !== "Service Provider" && req.role !=="Manager"){
+    return res.status(403).json("Only Service rovider can create a Service!");
   }
   if(!req.file){
     return res.status(403).json("You should upload cover of your Service !!")
@@ -36,14 +36,17 @@ const createService = async (req, res) => {
 
 const deleteService = async (req, res) => {
   try {
-    const Service = await Service.findById(req.params.id);
-    if (Service.userId !== req.userId){
+    const service = await Service.findById(req.params.id);
+    if(!service){
+      return res.status(404).json("service Not found!!")
+    }
+    if (service.userId.toString() !== req.userId){
       return res.status(403).json("You can delete only your Service!")}
 
     await Service.findByIdAndDelete(req.params.id);
     return res.status(200).send("Service has been deleted!");
   } catch (error) {
-    console.log(error.message)
+    console.log(error)
     return res.status(500).json(error.message);
   }
 };

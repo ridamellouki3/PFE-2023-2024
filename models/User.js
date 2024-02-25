@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
   },
   img: {
     type: String,
-    required: required,
+    required: true,
   },
   country: {
     type: String,

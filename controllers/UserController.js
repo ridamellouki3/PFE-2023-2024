@@ -2,12 +2,8 @@ const { isValidObjectId } = require('mongoose')
 const User = require('../models/User') 
 const validator = require("validator")
 
-//chnoo randiir hnaa??
-
 // 1. delete a user .??
-//2. Get a user bach nwerii les infoo dyaloo + verify taa3 email with mailer ...
-//3. create a user bY Manager 
-
+//2.verify taa3 email with mailer ...
 //get user Profile 
 const userPofile = async (req,res)=>{
 
@@ -22,10 +18,11 @@ const userPofile = async (req,res)=>{
 
 const createUser = async (req,res)=>{
     if(req.role !== 'Manager' ){
-        return res.status(500).json("Only Managers can create A User ");
+        return res.status(404).json("Only Managers can create A User ");
     }
 
     try{
+        
         if(!validator.isEmail(req.body.email)){
             throw Error('This is not a valid Email!');
         }
@@ -34,10 +31,11 @@ const createUser = async (req,res)=>{
         }
         
         if(!req.file){
-            return res.status(500).json("You should upload an image!!");
+            return res.status(404).json("You should upload an image!!");
         }
+        
         const salt = await bcrypt.genSalt(10);
-        const hashedpass = await bcrypt.hash(req.body.password, salt);
+        const hashedpass = await bcrypt.hash(password, salt);
         const user = await User.create({
           ...req.body,
           password: hashedpass,
@@ -45,17 +43,27 @@ const createUser = async (req,res)=>{
           role : "Service Provider",
           managerId : req.userId
         });
+        console.log(user);
         return res.status(201).json("You are create a Service Provider successfully")
         
     }catch(error){
+        console.log(error.message);
+        return res.status(500).json(error.message);
+    }
+}
+
+const deleteUser = async(req,res)=>{
+
+    if(req.role =='Client'){
 
     }
+
 }
 
 
 
 module.exports = {
-    userPofile,createUser
+    userPofile,createUser,deleteUser
 }
 
 

@@ -7,6 +7,7 @@ const messageRoute = require("./routes/MessageRoute");
 const categorieRouter = require("./routes/CategorieRoute")
 const orderRoute = require("./routes/OrderRoute");
 const reviewRoute = require("./routes/ReviewRoute");
+const userRoute = require("./routes/UserRoute");
 
 
 require("dotenv").config()
@@ -24,6 +25,8 @@ connection((err)=>{
         console.log(err)
     }
 })
+
+
 app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
@@ -37,3 +40,4 @@ app.use("/api/messages",messageRoute)
 app.use("/api/categories",categorieRouter);
 app.use("/api/orders", orderRoute)
 app.use("/api/reviews", reviewRoute);
+app.use("/api/users",userRoute);

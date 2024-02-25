@@ -4,7 +4,8 @@ mongoose.connect(process.env.DBURL);
 
 const serviceSchema = new mongoose.Schema({
   userId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
   title: {
