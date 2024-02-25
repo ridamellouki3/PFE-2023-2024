@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 require("dotenv").config();
 
-
 //function called to set the cookie
 const setCookie = (res, token) => {
   res.cookie("accessToken", token, {
@@ -14,7 +13,7 @@ const setCookie = (res, token) => {
   });
 };
 
-const registre =   async (req,res,) => {
+const registre = async (req, res) => {
   try {
     if (!validator.isEmail(req.body.email)) {
       return res.status(400).json({ error: "This is not a valid Email" });
@@ -22,18 +21,22 @@ const registre =   async (req,res,) => {
     if (!validator.isStrongPassword(req.body.password)) {
       return res.status(400).json({ error: "password is not strong enough" });
     }
-    if(req.file){
-     console.log(req.file);
-    }else{
-      return res.status(500).json('You should upload an image!!')
+    if (req.file) {
+      console.log(req.file);
+      //Create a Salt(Random STring) for password hashing
+      const salt = await bcrypt.genSalt(10);
+      const hashedpass = await bcrypt.hash(req.body.password, salt);
+      const user = await User.create({
+        ...req.body,
+        password: hashedpass,
+        img: req.file.filename,
+      });
+      console.log(user);
+      return res.status(201).json("User has been created.");
+    } else {
+      return res.status(500).json("You should upload an image!!");
     }
-    //Create a Salt(Random STring) for password hashing 
     
-    const salt = await bcrypt.genSalt(10);
-    const hashedpass = await bcrypt.hash(req.body.password, salt);
-    const user = await User.create({ ...req.body, password: hashedpass ,img : req.file.filename});
-    console.log(user);
-    return res.status(201).json("User has been created.");
   } catch (error) {
     console.log(error);
     return res.status(500).json(error.message);

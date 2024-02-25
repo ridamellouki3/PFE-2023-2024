@@ -29,9 +29,9 @@ const createReview = async (req, res) => {
         }
 
    
-  } catch (err) {
-    console.log(err.message)
-    return res.status(500).json(err.message);    
+  } catch (error) {
+    console.log(error.message)
+    return res.status(500).json(error.message);    
   }
 };
 
@@ -39,9 +39,9 @@ const getReviews = async (req, res) => {
   try {
     const reviews = await Review.find({ serviceId: req.params.serviceId });
     return res.status(200).send(reviews);
-  } catch (err) {
-    console.log(err.message)
-    return res.status(500).json(err.message);  
+  } catch (error) {
+    console.log(error.message)
+    return res.status(500).json(error.message);  
   }
 };
 
@@ -61,9 +61,9 @@ const deleteReview = async (req, res) => {
     }else{
         return res.status(404).send("review not found");
     }
-  } catch (err) {
-    console.log(err.message)
-    return res.status(500).json(err.message);  
+  } catch (error) {
+    console.log(error.message)
+    return res.status(500).json(error.message);  
   }
 };
 

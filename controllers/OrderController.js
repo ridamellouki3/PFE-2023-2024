@@ -20,7 +20,7 @@ const intent = async (req, res) => {
    if (!moment(req.body.date).isValid()) {
     throw new Error('Invalid date format');
   }
-
+  
   const newOrder = new Order({
     serviceId: service._id,
     img: service.cover,

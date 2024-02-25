@@ -19,9 +19,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  gender:{
+    type : String,
+    required:true,
+    enum : ['Male','Female']
+  },
   img: {
     type: String,
-    required: false,
+    required: required,
   },
   country: {
     type: String,
@@ -35,11 +40,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  //
+  managerId:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'User',
+    require:false
+  },
+
   role:{
     type:String ,
-    enum:["client","Manager","Service Provider"],
-    default:"client"
+    enum:["Client","Manager","Service Provider"],
+    default:"Client"
   }
 
 },{timestamps:true})
