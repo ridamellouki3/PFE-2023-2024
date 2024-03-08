@@ -54,6 +54,10 @@ const userSchema = new mongoose.Schema({
     type:String ,
     enum:["Client","Manager","Service Provider"],
     default:"Client"
+  },
+  verified:{
+    type:Boolean,
+    default:false
   }
 
 },{timestamps:true})

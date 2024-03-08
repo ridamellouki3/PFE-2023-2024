@@ -3,6 +3,7 @@ const validator = require("validator");
 const Order = require("../models/order");
 const Review = require("../models/Review");
 const Service = require("../models/Service");
+const Token = require("../models/Token");
 
 const userPofile = async (req, res) => {
   try {
@@ -101,9 +102,60 @@ const deleteUser = async (req, res) => {
         return req.status(404).json("User Not Found");
       }
     } catch (error) {
-        console.error(error.message)
-        return res.status(501).json(error.message);
+      console.error(error.message);
+      return res.status(501).json(error.message);
     }
+  }
+};
+
+const deleteByManager = async (req, res) => {
+  if (req.role !== "Manager") {
+    return res.status(401).json("This is only For Managers");
+  }
+  try {
+    const user = await User.findOne({
+      _id: req.params.id,
+      managerId: req.userId,
+    });
+    if (!user) {
+      return res.status(401).json("You can Delete Only Your Service Provider");
+    }
+    (await Service.find({ userId: user._id })).forEach(async (service) => {
+      await Order.deleteMany({ serviceId: user._id });
+      await Review.deleteMany({ serviceId: user._id });
+      service.deleteOne();
+    });
+    return res.status(201).json("User deleted successfully");
+  } catch (error) {
+    console.error(error.message);
+    return res.status(500).json(error.message);
+  }
+};
+const verifyProfile = async (req, res) => {
+  try {
+    
+    const user = await User.findOne({ _id: req.params.id });
+    
+    if (user) {
+      const token = await Token.findOne({
+        userId: user._id,
+        token: req.params.token,
+      });
+
+      console.log("THis is your token",token)
+      
+      if(!token){
+        return res.status(401).json('Invalid Link ');
+      }
+      const u = await User.findByIdAndUpdate(user._id,{verified:true});
+      console.log(u)
+      await token.deleteOne();
+      return 
+    }
+    return res.status(400).json("Invalid Link ");
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json(error.message);
   }
 };
 
@@ -111,4 +163,6 @@ module.exports = {
   userPofile,
   createUser,
   deleteUser,
+  deleteByManager,
+  verifyProfile
 };

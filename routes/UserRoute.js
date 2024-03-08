@@ -1,7 +1,7 @@
 const express = require('express');
 const verifyToken = require('../middleware/JWT')
 const router = express.Router()
-const {userPofile,createUser,deleteUser} = require('../controllers/UserController')
+const {verifyProfile,userPofile,createUser,deleteUser,deleteByManager} = require('../controllers/UserController')
 const multer = require("multer");
 const path = require("path");
 
@@ -20,10 +20,11 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+router.get("/:id/verify/:token",verifyProfile)
 router.get('/profile',verifyToken,userPofile);
 router.post('/createUser',upload.single('img'),verifyToken,createUser);
 router.delete('/delete/:id',verifyToken,deleteUser);
-
+router.delete('/deleteByManager/:id',deleteByManager);
 
 
 module.exports = router
