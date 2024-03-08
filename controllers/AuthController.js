@@ -56,16 +56,29 @@ const login = async (req, res) => {
     );
     const { password, ...info } = user._doc;
     setCookie(res, token);
-    res.status(200).send(info);
+    return res.status(200).send(info);
   } catch (error) {
     console.log(error);
     return res.status(400).json(error.message);
   }
 };
 
-const logout = async (req, res) => {
-  res.clearCookie("accessToken").status(200).send("User has been logged out.");
+const logout = (req, res) => {
+  if(req.user){
+    req.logout();
+    req.session.destroy();
+  }
+  const cookies = req.cookies;
+  for (const cookieName in cookies) {
+    res.clearCookie(cookieName);
+  }
+  return res.status(200).send("User has been logged out.");
+  
 };
+
+
+
+
 
 module.exports = {
   registre,

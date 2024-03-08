@@ -7,13 +7,12 @@ const createConversation = async (req, res) => {
   try {
     const newConversation = new Conversation({
     serviceProviderId: (req.role=="Service Provider") ? req.userId : req.body.to,
-    clientId: req.role=="client" ? req.body.to : req.userId,
+    clientId: req.role=="client" ? req.userId : req.body.to,
     readByServiceProvider : (req.role=="Service Provider"),
     readByClient: (req.role=="client"),
   });
-
- 
-    const savedConversation = await newConversation.save();
+    
+  const savedConversation = await newConversation.save();
     return res.status(201).json(savedConversation);
   } catch (err) {
     console.log(err.message);

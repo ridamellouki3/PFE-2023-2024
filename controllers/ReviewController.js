@@ -51,7 +51,7 @@ const deleteReview = async (req, res) => {
     const review = await Review.findById(req.params.id);
     if(review){
       if(review.userId !== req.userId){
-        return res.status(403).json("You can delete only your Service!")
+        return res.status(403).json("You can delete only your Review!")
       }
         const service = await Service.findByIdAndUpdate(review.serviceId,{
             $inc:{totalStars: -review.star , starNumber: -1 }

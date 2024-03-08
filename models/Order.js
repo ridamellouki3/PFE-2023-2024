@@ -2,11 +2,10 @@ const mongoose = require("mongoose");
 require("dotenv").config()
 mongoose.connect(process.env.DBURL);
 
-
 const orderSchema = new mongoose.Schema( {
     serviceId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref:"User",
+      ref:"Service",
       required: true,
     },
     img: {
@@ -47,8 +46,8 @@ const orderSchema = new mongoose.Schema( {
       type: String,
       required: true,
     },
-  },{timestamps: true,})
+  },{timestamps: true})
 
   const Order = mongoose.model("Order",orderSchema)
 
-  module.exports = Order 
+module.exports = Order

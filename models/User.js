@@ -7,7 +7,7 @@ mongoose.connect(process.env.DBURL);
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: true,
+    //required: true,
     unique: true,
   },
   email: {
@@ -17,20 +17,21 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    require:false,
   },
   gender:{
     type : String,
     required:true,
-    enum : ['Male','Female']
+    enum : ['Male','Female'],
+    default:'Male'
   },
   img: {
     type: String,
-    required: true,
+    //required: true,
   },
   country: {
     type: String,
-    required: true,
+    //required: true,
   },
   phone: {
     type: String,
@@ -45,7 +46,10 @@ const userSchema = new mongoose.Schema({
     ref:'User',
     require:false
   },
-
+  googleId:{
+    type:String,
+    require:false
+  },
   role:{
     type:String ,
     enum:["Client","Manager","Service Provider"],

@@ -5,6 +5,7 @@ const {userPofile,createUser,deleteUser} = require('../controllers/UserControlle
 const multer = require("multer");
 const path = require("path");
 
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -22,8 +23,6 @@ const upload = multer({ storage: storage });
 router.get('/profile',verifyToken,userPofile);
 router.post('/createUser',upload.single('img'),verifyToken,createUser);
 router.delete('/delete/:id',verifyToken,deleteUser);
-
-
 
 
 
