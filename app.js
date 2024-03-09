@@ -30,7 +30,10 @@ connection((err)=>{
 app.use(session({
     secret: process.env.JWT_SECRET,
     resave: false, 
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 24 * 60 * 60 * 1000,
+      }
 }));
 app.use(cors())
 app.use(express.json())

@@ -133,24 +133,23 @@ const deleteByManager = async (req, res) => {
 };
 const verifyProfile = async (req, res) => {
   try {
-    
     const user = await User.findOne({ _id: req.params.id });
-    
+
     if (user) {
       const token = await Token.findOne({
         userId: user._id,
         token: req.params.token,
       });
 
-      console.log("THis is your token",token)
-      
-      if(!token){
-        return res.status(401).json('Invalid Link ');
+      console.log("THis is your token", token);
+
+      if (!token) {
+        return res.status(401).json("Invalid Link ");
       }
-      const u = await User.findByIdAndUpdate(user._id,{verified:true});
-      console.log(u)
+      const u = await User.findByIdAndUpdate(user._id, { verified: true });
+      console.log(u);
       await token.deleteOne();
-      return 
+      return;
     }
     return res.status(400).json("Invalid Link ");
   } catch (error) {
@@ -164,5 +163,5 @@ module.exports = {
   createUser,
   deleteUser,
   deleteByManager,
-  verifyProfile
+  verifyProfile,
 };

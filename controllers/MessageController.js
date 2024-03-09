@@ -1,7 +1,5 @@
-const Message = require("../models/Message")
-const Conversation =require( "../models/Conversation")
-
-
+const Message = require("../models/Message");
+const Conversation = require("../models/Conversation");
 
 const createMessage = async (req, res) => {
   const newMessage = await new Message({
@@ -16,8 +14,8 @@ const createMessage = async (req, res) => {
       { id: req.body.conversationId },
       {
         $set: {
-          readByServiceProvider : (req.role =="Sevice Provider"),
-          readByClient: !(req.role =="Sevice Provider"),
+          readByServiceProvider: req.role == "Sevice Provider",
+          readByClient: !(req.role == "Sevice Provider"),
           lastMessage: req.body.message,
         },
       },
@@ -31,17 +29,19 @@ const createMessage = async (req, res) => {
   }
 };
 
- const getMessages = async (req, res) => {
+const getMessages = async (req, res) => {
   try {
-    const messages = await Message.find({ conversationId: req.params.id }).sort({createdAt:1});
+    const messages = await Message.find({ conversationId: req.params.id }).sort(
+      { createdAt: 1 }
+    );
     return res.status(200).send(messages);
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
     return res.status(500).json(error.message);
   }
 };
 
-
 module.exports = {
-    createMessage,getMessages
-}
+  createMessage,
+  getMessages,
+};

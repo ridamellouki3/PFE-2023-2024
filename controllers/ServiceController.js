@@ -2,13 +2,15 @@ const Service = require("../models/Service");
 const Order = require("../models/order");
 const Categorie = require("../models/Categorie");
 const Review = require("../models/Review");
+const { isValidObjectId } = require("mongoose");
+const { ObjectId } = require("bson");
 
 const createService = async (req, res) => {
   if (req.role !== "Service Provider" && req.role !== "Manager") {
-    return res.status(403).json("Only Service rovider can create a Service!");
+    return res.status(403).json("Only Service Provider can create a Service!");
   }
   if (!req.file) {
-    return res.status(403).json("You should upload cover of your Service !!");
+    return res.status(403).json("You should upload cover for your Service !!");
   }
   console.log(req.file);
   const categorie = await Categorie.findOne({ name: req.body.categorie });
@@ -68,31 +70,38 @@ const getService = async (req, res) => {
 const getServices = async (req, res) => {
   try {
     const { userId, categorieName, min, max, sort } = req.query;
+    if (!isValidObjectId(userId)) {
+      return res.status(501).json("This Is Not A Valid Object Id");
+    }
+    let filters = {};
 
-    const categorie = await Categorie.findOne({ name: categorieName });
-    if (!categorie) {
-      return res.status(403).json("There is no Categorie with that name !!!");
-    }
-    const filters = {};
-    if (userId) {
-      filters.userId = userId;
-    }
     if (categorieName) {
+      const categorie = await Categorie.findOne({ name: categorieName });
+      if (!categorie) {
+        return res.status(403).json("There is no Categorie with that name !!!");
+      }
+
       filters.categorieId = categorie._id;
     }
+
+    if (userId) {
+      filters.userId = new ObjectId(userId);
+    }
+
     if (min || max) {
       filters.price = {};
     }
     if (min) {
-      filters.price.$gt = min;
+      filters.price.$gte = Number(min);
     }
     if (max) {
-      filters.price.$lt = max;
+      filters.price.$lte = Number(max);
     }
+
     console.log(filters);
     const sortOptions = sort ? { [sort]: -1 } : {};
     const services = await Service.find(filters).sort(sortOptions);
-
+    console.log(await Service.find(filters));
     return res.status(200).send(services);
   } catch (error) {
     console.log(error.message);

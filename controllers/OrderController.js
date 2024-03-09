@@ -1,94 +1,120 @@
-const Order = require("../models/order")
-const Service = require("../models/Service")
-require("dotenv").config()
-const Stripe = require("stripe")(process.env.STRIPE_KEY)
-
+const Order = require("../models/order");
+const Service = require("../models/Service");
+require("dotenv").config();
+const moment = require("moment");
+const Stripe = require("stripe")(process.env.STRIPE_KEY);
 
 //create a payment intent;
 
-
-
 const intent = async (req, res) => {
-  const service = await Service.findById(req.params.id);
-  const paymentIntent = await Stripe.paymentIntents.create({
-    amount: service.price,
-    currency: "usd",
-    automatic_payment_methods: {
-      enabled: true,
-    },
-  });
-   if (!moment(req.body.date).isValid()) {
-    throw new Error('Invalid date format');
+  try {
+    if (req.role !== "Client") {
+      return res.status(403).json({ error: "Only clients can pass an order" });
+    }
+
+    const service = await Service.findById(req.params.id);
+    if (!service) {
+      return res.status(404).json({ error: "Service not found" });
+    }
+    const passedDate = moment(req.body.date).toDate();
+    if (!moment(passedDate, "YYYY-MM-DD", true).isValid()) {
+      return res.status(400).json({ error: "Invalid date format" });
+    }
+
+    const paymentIntent = await Stripe.paymentIntents.create({
+      amount: service.price * 100, // Convert price to cents (if using Stripe in cents)
+      currency: "usd",
+      payment_method_types: ["card"],
+    });
+
+    const newOrder = new Order({
+      serviceId: service._id,
+      img: service.cover,
+      title: service.title,
+      clientId: req.userId,
+      serviceProviderId: service.userId,
+      price: service.price,
+      time: passedDate,
+      payment_intent: paymentIntent.id,
+    });
+
+    await newOrder.save();
+
+    return res.status(200).json({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: error.message });
   }
-  
-  const newOrder = new Order({
-    serviceId: service._id,
-    img: service.cover,
-    title: service.title,
-    clientId: req.userId,
-    serviceProviderId: service.userId,
-    price: service.price,
-    time:new Date(req.body.date),
-    payment_intent: paymentIntent.id,
-  });
-
-  await newOrder.save();
-
-  return res.status(200).send({
-    clientSecret: paymentIntent.client_secret,
-  });
 };
-
 
 const getOrders = async (req, res) => {
   try {
-    
     const orders = await Order.find({
-      ...(req.role =='Service Provider' ? { serviceProviderId: req.userId } : { clientId: req.userId })
-    },{createdAt:-1});
-
-    return res.status(200).send(orders);
+      ...(req.role === "Service Provider"
+        ? { serviceProviderId: req.userId }
+        : { clientId: req.userId }),
+    });
+    return res.status(200).json(orders);
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
     return res.status(500).json(err.message);
   }
-}
-
-
+};
 
 const confirm = async (req, res) => {
   try {
-    const order = await Order.findByIdAndUpdate( req.body._id,
-      {
-        $set: {
-          isCompleted: true,
-        },
+    if (req.role !== "Service Provider") {
+      return res
+        .status(500)
+        .json("Only Service Provider Can Confirm Thier Orders.");
+    }
+    const order = await Order.findOne({
+      _id: req.params.id,
+      isConfirmed: false,
+    });
+    if (order) {
+      if (order.serviceProviderId.toString() !== req.userId) {
+        return res.status(401).json("You can Confirm only Your Orders.");
       }
-    );
-    const service = await Service.findByIdAndUpdate(order.serviceId,{$inc:{sales:1}})
+      await order.updateOne({ $set: { isConfirmed: true } });
+      const service = await Service.findByIdAndUpdate(order.serviceId, {
+        $inc: { sales: 1 },
+      });
 
-    return res.status(200).json("Order is confirmed.");
+      return res.status(200).json("Order is confirmed.");
+    } else {
+      return res.status(404).json("No Order Found!");
+    }
   } catch (error) {
     console.log(error);
     return res.status(500).json(error.message);
   }
 };
-const completeOrder = async (req,res)=>{
-  try{
-    const order = await Order.findByIdAndUpdate(
-      req.body._id,{
-        $set:{isCompleteService:true}
+const completeOrder = async (req, res) => {
+  try {
+    if (req.role !== "Service Provider") {
+      return res
+        .status(500)
+        .json("Only Service Provider Can Confirm Thier Orders.");
+    }
+    const order = await Order.findOneAndUpdate(
+      { _id: req.params.id, serviceProviderId: req.userId },
+      {
+        $set: { isCompleteService: true },
       }
-    )
-      return res.status(201).json("You complete this order successfully")
-  }catch(error){
+    );
+    return res.status(201).json("You complete this order successfully");
+  } catch (error) {
     console.log(error.message);
     return res.status(500).json(error.message);
   }
-}
-
-
+};
 
 module.exports = {
-    intent,getOrders,confirm,completeOrder
-}
+  intent,
+  getOrders,
+  confirm,
+  completeOrder,
+};
