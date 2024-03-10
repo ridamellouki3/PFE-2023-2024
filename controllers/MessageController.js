@@ -11,11 +11,11 @@ const createMessage = async (req, res) => {
     const savedMessage = await newMessage.save();
 
     await Conversation.findOneAndUpdate(
-      { id: req.body.conversationId },
+      { _id: req.body.conversationId },
       {
         $set: {
-          readByServiceProvider: req.role == "Sevice Provider",
-          readByClient: !(req.role == "Sevice Provider"),
+          readByServiceProvider: req.role === "Sevice Provider",
+          readByClient: req.role !== "Sevice Provider",
           lastMessage: req.body.message,
         },
       },

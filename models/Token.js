@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 require("dotenv").config()
 mongoose.connect(process.env.DBURL);
 
+
+
 const tokenSchema = new mongoose.Schema({
     userId:{
         type:mongoose.Schema.Types.ObjectId,

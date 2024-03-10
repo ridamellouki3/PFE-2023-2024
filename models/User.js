@@ -7,7 +7,7 @@ mongoose.connect(process.env.DBURL);
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
-    //required: true,
+    required: true,
     unique: true,
   },
   email: {
@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
   },
   img: {
     type: String,
-    //required: true,
+    required: true,
   },
   country: {
     type: String,

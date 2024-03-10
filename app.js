@@ -10,12 +10,13 @@ const orderRoute = require("./routes/OrderRoute");
 const reviewRoute = require("./routes/ReviewRoute");
 const userRoute = require("./routes/UserRoute");
 const passport = require('passport')
+const  swaggerjsdoc =require('swagger-jsdoc')
+const swaggerui = require('swagger-ui-express'); 
 
 require("dotenv").config()
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const app = express()
-
 
 
 connection((err)=>{
@@ -26,6 +27,30 @@ connection((err)=>{
         console.log(err)
     }
 })
+
+const swaggerDefinition = {
+    openapi: "3.0.0",
+    info: {
+    title: "My API For My APP(PFE)",
+    version: "1.0.0",
+    description: "",
+    contact:{
+        name:"Rida Mellouki & Abdollah Nait Ouahmane",
+        email:"r.mellouki9960@uca.ac.ma"
+    }
+    },
+    servers:[{
+        url:"http://localhost:4000/"
+    }]
+    };
+
+    const options = {
+        swaggerDefinition,
+        apis: ["./routes/*.js"], // Path to the API routes in your Node.js application
+        };
+
+
+
 
 app.use(session({
     secret: process.env.JWT_SECRET,
@@ -54,6 +79,7 @@ app.use("/api/categories",categorieRouter);
 app.use("/api/orders", orderRoute)
 app.use("/api/reviews", reviewRoute);
 app.use("/api/users",userRoute);
+
 const isLogIn = (req, res, next) => {
     if (!req.cookies['connect.sid']) {
         return next(); 
@@ -71,3 +97,5 @@ app.get('/failure',isLogIn,(req,res)=>{
     
     res.send("<h1>grr</h1>")
 })
+const spacs = swaggerjsdoc(options);
+app.use('/api-docs',swaggerui.serve,swaggerui.setup(spacs))
