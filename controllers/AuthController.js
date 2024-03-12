@@ -66,8 +66,10 @@ const login = async (req, res) => {
         { expiresIn: "1d" }
       );
       const { password, ...info } = user._doc;
+
+      console.log(info);
       setCookie(res, token);
-      return res.status(200).send(info);
+      return res.status(200).send({success:info});
     } else {
       let token = await Token.findOne({ userId: user._id });
       if (!token) {
@@ -81,11 +83,11 @@ const login = async (req, res) => {
       await sendEmail(user.email, url);
       return res
         .status(201)
-        .json("An Email is sent to your Email please verify !!");
+        .json({verifyEmail : "An Email is sent to your Email please verify !!"});
     }
   } catch (error) {
     console.log(error);
-    return res.status(400).json(error.message);
+    return res.status(400).json({ error : error.message});
   }
 };
 
@@ -98,7 +100,7 @@ const logout = (req, res) => {
   for (const cookieName in cookies) {
     res.clearCookie(cookieName);
   }
-  return res.status(200).send("User has been logged out.");
+  return res.status(200).json({success:"User has been logged out."});
 };
 module.exports = {
   registre,

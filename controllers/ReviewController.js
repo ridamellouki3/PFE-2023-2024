@@ -15,7 +15,7 @@ const createReview = async (req, res) => {
     if (review) {
       return res
         .status(403)
-        .json("You have already created a review for this Service!");
+        .json({error:"You have already created a review for this Service!"});
     } else {
       const newReview = new Review({
         userId: req.userId,
@@ -28,21 +28,21 @@ const createReview = async (req, res) => {
         $inc: { totalStars: req.body.star, starNumber: 1 },
       });
 
-      return res.status(201).send(savedReview);
+      return res.status(201).send({success:"Review created successfully"});
     }
   } catch (error) {
     console.log(error.message);
-    return res.status(500).json(error.message);
+    return res.status(500).json({error:error.message});
   }
 };
 
 const getReviews = async (req, res) => {
   try {
     const reviews = await Review.find({ serviceId: req.params.serviceId });
-    return res.status(200).send(reviews);
+    return res.status(200).send({reviews:reviews});
   } catch (error) {
     console.log(error.message);
-    return res.status(500).json(error.message);
+    return res.status(500).json({error:error.message});
   }
 };
 
@@ -51,19 +51,19 @@ const deleteReview = async (req, res) => {
     const review = await Review.findById(req.params.id);
     if (review) {
       if (review.userId.toString() !== req.userId) {
-        return res.status(403).json("You can delete only your Review!");
+        return res.status(403).json({error:"You can delete only your Review!"});
       }
       const service = await Service.findByIdAndUpdate(review.serviceId, {
         $inc: { totalStars: -review.star, starNumber: -1 },
       });
       await review.deleteOne();
-      return res.status(200).send("Review deleted successfully");
+      return res.status(200).send({success:"Review deleted successfully"});
     } else {
-      return res.status(404).send("review not found");
+      return res.status(404).send({error:"review not found"});
     }
   } catch (error) {
     console.log(error.message);
-    return res.status(500).json(error.message);
+    return res.status(500).json({error:error.message});
   }
 };
 

@@ -56,10 +56,10 @@ const getOrders = async (req, res) => {
         ? { serviceProviderId: req.userId }
         : { clientId: req.userId }),
     });
-    return res.status(200).json(orders);
+    return res.status(200).json({orders:orders});
   } catch (err) {
     console.log(err.message);
-    return res.status(500).json(err.message);
+    return res.status(500).json({error:err.message});
   }
 };
 
@@ -68,7 +68,7 @@ const confirm = async (req, res) => {
     if (req.role !== "Service Provider") {
       return res
         .status(500)
-        .json("Only Service Provider Can Confirm Thier Orders.");
+        .json({error:"Only Service Provider Can Confirm Thier Orders."});
     }
     const order = await Order.findOne({
       _id: req.params.id,
@@ -89,7 +89,7 @@ const confirm = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    return res.status(500).json(error.message);
+    return res.status(500).json({error:error.message});
   }
 };
 const completeOrder = async (req, res) => {
@@ -97,7 +97,7 @@ const completeOrder = async (req, res) => {
     if (req.role !== "Service Provider") {
       return res
         .status(500)
-        .json("Only Service Provider Can Confirm Thier Orders.");
+        .json({error:"Only Service Provider Can Confirm Thier Orders."});
     }
     const order = await Order.findOneAndUpdate(
       { _id: req.params.id, serviceProviderId: req.userId },
@@ -105,10 +105,10 @@ const completeOrder = async (req, res) => {
         $set: { isCompleteService: true },
       }
     );
-    return res.status(201).json("You complete this order successfully");
+    return res.status(201).json({success:"You complete this order successfully"});
   } catch (error) {
     console.log(error.message);
-    return res.status(500).json(error.message);
+    return res.status(500).json({error:error.message});
   }
 };
 

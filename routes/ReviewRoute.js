@@ -36,7 +36,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /reviews:
+ * /api/reviews:
  *   post:
  *     tags: [Reviews]
  *     summary: Create a review
@@ -72,7 +72,7 @@ const router = express.Router();
  *       '500':
  *         description: Internal server error.
  *
- * /reviews/{id}:
+ * /api/reviews/{id}:
  *   delete:
  *     tags: [Reviews]
  *     summary: Delete a review

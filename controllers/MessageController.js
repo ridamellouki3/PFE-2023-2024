@@ -22,10 +22,10 @@ const createMessage = async (req, res) => {
       { new: true }
     );
 
-    return res.status(201).send(savedMessage);
+    return res.status(201).send({success:"message sent successfully"});
   } catch (error) {
     console.log(error.message);
-    return res.status(500).json(error.message);
+    return res.status(500).json({error:error.message});
   }
 };
 
@@ -34,10 +34,10 @@ const getMessages = async (req, res) => {
     const messages = await Message.find({ conversationId: req.params.id }).sort(
       { createdAt: 1 }
     );
-    return res.status(200).send(messages);
+    return res.status(200).send({messages:messages});
   } catch (error) {
     console.log(error.message);
-    return res.status(500).json(error.message);
+    return res.status(500).json({error:error.message});
   }
 };
 

@@ -65,7 +65,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /orders:
+ * /api/orders:
  *   get:
  *     tags: [Orders]
  *     summary: Get all orders
@@ -79,7 +79,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /orders/create-payment/{id}:
+ * /api/orders/create-payment/{id}:
  *   post:
  *     tags: [Orders]
  *     summary: Create payment intent for an order
@@ -106,7 +106,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /orders/{id}:
+ * /api/orders/{id}:
  *   patch:
  *     tags: [Orders]
  *     summary: Confirm an order
@@ -131,7 +131,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /orders/compelete-order/{id}:
+ * /api/orders/compelete-order/{id}:
  *   patch:
  *     tags: [Orders]
  *     summary: Complete an order

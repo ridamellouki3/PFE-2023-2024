@@ -71,7 +71,7 @@ const upload = multer({ storage: storage });
  *         - price
  *         - cover
  *
- * /services:
+ * /api/services:
  *   post:
  *     tags: [Services]
  *     summary: Create a service
@@ -140,7 +140,7 @@ const upload = multer({ storage: storage });
  *       '500':
  *         description: Internal server error.
  *
- * /services/{id}:
+ * /api/services/{id}:
  *   get:
  *     tags: [Services]
  *     summary: Get service by ID

@@ -29,7 +29,7 @@ const upload = multer({ storage: storage });
 
 /**
  * @swagger
- * /users/{id}/verify/{token}:
+ * /api/users/{id}/verify/{token}:
  *   get:
  *     tags: [Users]
  *     summary: Verify profile
@@ -56,7 +56,7 @@ const upload = multer({ storage: storage });
 router.get("/:id/verify/:token",verifyProfile)
 /**
  * @swagger
- * /users/profile:
+ * /api/users/profile:
  *   get:
  *     tags: [Users]
  *     summary: Get user profile
@@ -68,7 +68,7 @@ router.get("/:id/verify/:token",verifyProfile)
 router.get('/profile',verifyToken,userPofile);
 /**
  * @swagger
- * /users/createUser:
+ * /api/users/createUser:
  *   post:
  *     tags: [Users]
  *     summary: Create user
@@ -101,7 +101,7 @@ router.get('/profile',verifyToken,userPofile);
 router.post('/createUser',upload.single('img'),verifyToken,createUser);
 /**
  * @swagger
- * /users/delete/{id}:
+ * /api/users/delete/{id}:
  *   delete:
  *     tags: [Users]
  *     summary: Delete user
@@ -126,7 +126,7 @@ router.post('/createUser',upload.single('img'),verifyToken,createUser);
 router.delete('/delete/:id',verifyToken,deleteUser);
 /**
  * @swagger
- * /users/deleteByManager/{id}:
+ * /api/users/deleteByManager/{id}:
  *   delete:
  *     tags: [Users]
  *     summary: Delete user by manager
