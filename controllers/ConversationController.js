@@ -1,6 +1,5 @@
 const { isValidObjectId } = require("mongoose");
 const Conversation = require("../models/Conversation");
-const User = require("../models/User");
 
 const createConversation = async (req, res) => {
   try {

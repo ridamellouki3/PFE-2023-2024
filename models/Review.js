@@ -6,7 +6,7 @@ mongoose.connect(process.env.DBURL);
 const reviewSchema = new mongoose.Schema( {
     serviceId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref:"User",
+      ref:"Service",
       required: true,
     },
     userId: {

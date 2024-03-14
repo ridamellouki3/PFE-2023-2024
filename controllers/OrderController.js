@@ -5,7 +5,6 @@ const moment = require("moment");
 const Stripe = require("stripe")(process.env.STRIPE_KEY);
 
 //create a payment intent;
-
 const intent = async (req, res) => {
   try {
     if (req.role !== "Client") {
@@ -49,13 +48,17 @@ const intent = async (req, res) => {
   }
 };
 
+
 const getOrders = async (req, res) => {
   try {
     const orders = await Order.find({
       ...(req.role === "Service Provider"
         ? { serviceProviderId: req.userId }
         : { clientId: req.userId }),
-    });
+    }).populate({
+      path:(req.role == "Service Provider")?("clientId"):('serviceProviderId'),
+      select : " img title price time isCompleteService isConfirmed"
+    })
     return res.status(200).json({orders:orders});
   } catch (err) {
     console.log(err.message);
@@ -76,16 +79,16 @@ const confirm = async (req, res) => {
     });
     if (order) {
       if (order.serviceProviderId.toString() !== req.userId) {
-        return res.status(401).json("You can Confirm only Your Orders.");
+        return res.status(401).json({error:"You can Confirm only Your Orders."});
       }
       await order.updateOne({ $set: { isConfirmed: true } });
       const service = await Service.findByIdAndUpdate(order.serviceId, {
         $inc: { sales: 1 },
       });
 
-      return res.status(200).json("Order is confirmed.");
+      return res.status(200).json({success:"Order is confirmed."});
     } else {
-      return res.status(404).json("No Order Found!");
+      return res.status(404).json({error:"No Order Found!"});
     }
   } catch (error) {
     console.log(error);

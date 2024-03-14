@@ -54,11 +54,14 @@ const deleteService = async (req, res) => {
 };
 const getService = async (req, res) => {
   try {
-    const service = await Service.findById(req.params.id);
+    const service = await Service.findById(req.params.id).populate({
+      path:'userId',
+      select:'username email gender img country verified',
+    }).populate({path:'categorieId',select:'name'});
     if (!service) {
-      res.status(404).json("Service not found!");
+      res.status(404).json({error:"Service not found!"});
     }
-    return res.status(200).send(service);
+    return res.status(200).send({service:service});
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({error:error.message});
@@ -67,7 +70,7 @@ const getService = async (req, res) => {
 
 //This is FOR A USER IF HE NEED TO SEARCH ABOUT A SERVICE
 
-const getServices = async (req, res) => {
+const filterServices = async (req, res) => {
   try {
     const { userId, categorieName, min, max, sort } = req.query;
     if (!isValidObjectId(userId)) {
@@ -97,13 +100,13 @@ const getServices = async (req, res) => {
     if (max) {
       filters.price.$lte = Number(max);
     }
-
-    console.log(filters);
     const sortOptions = sort ? { [sort]: -1 } : {};
-    const services = await Service.find(filters).sort(sortOptions);
-    console.log(await Service.find(filters));
+    const services = await Service.find(filters).sort(sortOptions).populate({
+      path:'userId',
+      select:'username email gender img country verified',
+    }).populate({path:'categorieId',select:'name'});
     if(services){
-      return res.status(200).send({success:services});
+      return res.status(200).send({services:services});
     }
     return res.status(404).send({error:'Not Found!'});
   } catch (error) {
@@ -112,9 +115,33 @@ const getServices = async (req, res) => {
   }
 };
 
+const ServicesByCategorie = async (req,res)=>{
+  try{
+    const categorieId = req.params ;
+    const categorie = await Categorie.findById(new ObjectId(categorieId));
+  if(categorie){
+    const services = await Service.find({categorieId : categorie._id}).limit(10).populate({
+      path:'userId',
+      select:'username email gender img country verified',
+    }).populate({path:'categorieId',select:'name'});
+    if(services){
+      return res.status(201).json({services:services});
+    }else{
+      return res.status(404).json({error:'There is no services to show'});
+    }
+  }
+  return res.status(404).json('Category not found!')
+  }catch(error){
+    console.log(error.message);
+    return res.status(501).json({error:error.message});
+  }
+}
+
+
 module.exports = {
   createService,
   deleteService,
   getService,
-  getServices,
+  filterServices,
+  ServicesByCategorie
 };

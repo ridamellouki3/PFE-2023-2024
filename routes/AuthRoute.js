@@ -8,6 +8,14 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+const setCookie = (request, token) => {
+  request.cookie("accessToken", token, {
+    //httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
+};
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -245,6 +253,7 @@ passport.use(
     },
     async function (request, accessToken, refreshToken, profile, done) {
       try {
+       setCookie(request.res,accessToken)
         let user = await User.findOne({ googleId: profile.id });
         if (!user) {
           // Create a new user if not found

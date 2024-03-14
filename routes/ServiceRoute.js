@@ -3,7 +3,8 @@ const {
   createService,
   deleteService,
   getService,
-  getServices,
+  filterServices,
+  ServicesByCategorie
 } = require("../controllers/ServiceController");
 const verifyToken = require("../middleware/JWT");
 const router = express.Router();
@@ -186,7 +187,9 @@ const upload = multer({ storage: storage });
 
 router.post("/",upload.single("cover"), verifyToken, createService);
 router.delete("/:id", verifyToken, deleteService);
+router.get("/My-Services/",verifyToken,);
+router.get("/ServicesByCategorie/:id",ServicesByCategorie);
 router.get("/single/:id", getService);
-router.get("/", getServices);
+router.get("/", filterServices);
 
 module.exports = router;

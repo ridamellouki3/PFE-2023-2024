@@ -5,7 +5,7 @@ mongoose.connect(process.env.DBURL);
 const messageSchema = new mongoose.Schema({
   conversationId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref:"User",
+    ref:"Conversation",
     required: true,
   },
   userId: {

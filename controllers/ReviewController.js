@@ -38,7 +38,10 @@ const createReview = async (req, res) => {
 
 const getReviews = async (req, res) => {
   try {
-    const reviews = await Review.find({ serviceId: req.params.serviceId });
+    const reviews = await Review.find({ serviceId: req.params.serviceId }).populate({
+      path:'userId',
+      select:'username img createdAt',
+    });
     return res.status(200).send({reviews:reviews});
   } catch (error) {
     console.log(error.message);
