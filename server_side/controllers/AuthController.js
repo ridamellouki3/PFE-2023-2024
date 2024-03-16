@@ -19,12 +19,12 @@ const setCookie = (res, token) => {
 
 const registre = async (req, res) => {
   try {
-    // if (!validator.isEmail(req.body.email)) {
-    //   return res.status(400).json({ error: "This is not a valid Email" });
-    // }
-    // if (!validator.isStrongPassword(req.body.password)) {
-    //   return res.status(400).json({ error: "password is not strong enough" });
-    // }
+    if (!validator.isEmail(req.body.email)) {
+      return res.status(400).json({ error: "This is not a valid Email" });
+    }
+    if (!validator.isStrongPassword(req.body.password)) {
+      return res.status(400).json({ error: "password is not strong enough" });
+    }
     if (req.file) {
       //Create a Salt(Random STring) for password hashing
       const salt = await bcrypt.genSalt(10);

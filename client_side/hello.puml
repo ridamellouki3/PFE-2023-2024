@@ -1,0 +1,85 @@
+@startuml
+
+class Categorie {
+  +_id: ObjectId
+  +name: String
+}
+class Conversation {
+  +_id: ObjectId
+  +serviceProviderId: ObjectId
+  +clientId: ObjectId
+  +readByServiceProvider: Boolean
+  +readByClient: Boolean
+  +lastMessage: String
+}
+class Message {
+  +_id: ObjectId
+  +conversationId: ObjectId
+  +userId: ObjectId
+  +message: String
+}
+class Order {
+  +_id: ObjectId
+  +serviceId: ObjectId
+  +img: String
+  +title: String
+  +price: Number
+  +serviceProviderId: ObjectId
+  +clientId: ObjectId
+  +time: Date
+  +isCompleteService: Boolean
+  +isConfirmed: Boolean
+  +payment_intent: String
+}
+class Review {
+  +_id: ObjectId
+  +serviceId: ObjectId
+  +userId: ObjectId
+  +star: Number
+  +desc: String
+}
+class Service {
+  +_id: ObjectId
+  +userId: ObjectId
+  +title: String
+  +desc: String
+  +totalStars: Number
+  +starNumber: Number
+  +categorieId: ObjectId
+  +price: Number
+  +cover: String
+  +sales: Number
+}
+class Token {
+  +_id: ObjectId
+  +userId: ObjectId
+  +token: String
+}
+
+class User {
+  +_id: ObjectId
+  +username: String
+  +email: String
+  +password: String
+  +gender: String
+  +img: String
+  +country: String
+  +phone: String
+  +desc: String
+  +managerId: ObjectId
+  +googleId: String
+  +role: String
+  +verified: Boolean
+}
+
+Categorie "1" -- "many" Service : Contains
+Service "1" -- "many" Order : Has
+Service "1" -- "many" Review : Has
+User "1" -- "many" Token : Has
+User "1" -- "many" Conversation : Has
+User "1" -- "many" Review : Writes
+User "1" -- "many" Service : Provides
+
+Order "1" -- "many" Message : Contains
+
+@enduml
