@@ -21,8 +21,7 @@ const createService = async (req, res) => {
   try {
     const newService = new Service({
       ...req.body,
-      //userId: (req.userId=='Service Provider')? req.userId : req.body.user,
-      userId: req.userId,
+      userId: (req.userId=='Service Provider')? req.userId : req.body.userId,
       categorieId: categorie._id,
       cover: req.file.filename,
     });

@@ -19,12 +19,12 @@ const setCookie = (res, token) => {
 
 const registre = async (req, res) => {
   try {
-    if (!validator.isEmail(req.body.email)) {
-      return res.status(400).json({ error: "This is not a valid Email" });
-    }
-    if (!validator.isStrongPassword(req.body.password)) {
-      return res.status(400).json({ error: "password is not strong enough" });
-    }
+    // if (!validator.isEmail(req.body.email)) {
+    //   return res.status(400).json({ error: "This is not a valid Email" });
+    // }
+    // if (!validator.isStrongPassword(req.body.password)) {
+    //   return res.status(400).json({ error: "password is not strong enough" });
+    // }
     if (req.file) {
       //Create a Salt(Random STring) for password hashing
       const salt = await bcrypt.genSalt(10);
@@ -43,9 +43,24 @@ const registre = async (req, res) => {
 
       return res
         .status(201)
-        .json("An Email is sent to your Email please verify !!");
+        .json({success:"An Email is sent to your Email please verify !!"});
     } else {
-      return res.status(500).json("You should upload an image!!");
+      const salt = await bcrypt.genSalt(10);
+      const hashedpass = await bcrypt.hash(req.body.password, salt);
+      const user = await User.create({
+        ...req.body,
+        password: hashedpass,
+      });
+      const token = await Token.create({
+        userId: user.id,
+        token: crypto.randomBytes(32).toString("hex"),
+      });
+      const url = `${process.env.Base_URL}api/users/${user.id}/verify/${token.token}`;
+      await sendEmail(user.email, url);
+
+      return res
+        .status(201)
+        .json({success:"An Email is sent to your Email please verify !!"});
     }
   } catch (error) {
     console.log(error);

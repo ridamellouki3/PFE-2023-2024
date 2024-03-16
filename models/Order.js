@@ -11,7 +11,7 @@ const orderSchema = new mongoose.Schema(
     },
     img: {
       type: String,
-      required: false,
+      required: true,
     },
     title: {
       type: String,
