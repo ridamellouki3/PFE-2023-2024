@@ -1,0 +1,63 @@
+
+.add {
+    display: flex;
+    justify-content: center;
+  
+    .container {
+      width: 1100px;
+      padding: 50px 0px;
+      margin-left: 290px  ;
+  
+      h1 {
+        width: max-content;
+        margin-bottom: 30px;
+        color: gray;
+        font-weight: 300;
+      }
+  
+      .sections {
+        display: flex;
+        justify-content: space-between;
+        gap: 100px;
+  
+        label {
+          color: gray;
+          font-size: 18px;
+        }
+  
+        .info,
+        .details , form{
+
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          justify-content: space-between;
+  
+       
+  
+          button {
+            border: none;
+            padding: 20px;
+            color: white;
+            font-weight: 500;
+            font-size: 18px;
+            background-color: #2794b0;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+  
+.noaccount{
+    margin: 0 auto;
+    
+   
+}
+
+.linkr{
+    color: #2794b0;
+}
+
