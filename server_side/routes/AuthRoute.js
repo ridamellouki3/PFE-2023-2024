@@ -218,7 +218,7 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "/protected",
+    successRedirect: "http://localhost:5173/",
     failureRedirect: "/failure",
   })
 );

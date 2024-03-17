@@ -11,3 +11,32 @@
     margin-right: 35px ;
 
 }
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+.bar {
+    padding: 10px;
+    margin: 10px;
+    color: #333;
+    background: #fafafa;
+    border: 1px solid #ccc;
+  }
+  .error {
+    color: #ba3939;
+    background: #ffe0e0;
+    border: 1px solid #a33a3a;
+  }
+  i.ico {
+    display: inline-block;
+    width: 20px;
+    text-align: center; 
+    font-style: normal;
+    font-weight: bold;
+  }
+  .success {
+    color: #2b7515;
+    background: #ecffd6;
+    border: 1px solid #617c42;
+  }

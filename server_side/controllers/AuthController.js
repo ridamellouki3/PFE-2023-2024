@@ -19,6 +19,7 @@ const setCookie = (res, token) => {
 
 const registre = async (req, res) => {
   try {
+    console.log(req.body);
     if (!validator.isEmail(req.body.email)) {
       return res.status(400).json({ error: "This is not a valid Email" });
     }
@@ -51,7 +52,7 @@ const registre = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    return res.status(500).json(error.message);
+    return res.status(500).json({error:error.message});
   }
 };
 
