@@ -8,10 +8,10 @@ const Token = require("../models/Token");
 const userPofile = async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.userId });
-    return res.status(201).json(user);
+    return res.status(201).json({success:user});
   } catch (error) {
     console.log(error.message);
-    return res.status(500).json(error.message);
+    return res.status(500).json({error:error.message});
   }
 };
 

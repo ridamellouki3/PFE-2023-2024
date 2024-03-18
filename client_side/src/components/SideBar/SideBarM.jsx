@@ -1,11 +1,27 @@
 import React from "react";
 import './Side.css'
-import { Link } from "react-router-dom";
-
+import { Link,useNavigate } from "react-router-dom";
 
 function SideBarM() {
-    
-    
+  const navigate = useNavigate();
+    const logout = async (e) =>{
+      e.preventDefault();
+      const response = await fetch('/api/auth/logout',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+      }
+      })
+      const json = await response.json();
+      console.log(json);
+      if(!response.ok){
+        
+      }else{
+        localStorage.removeItem("currentUser"); 
+        navigate('/');
+      }
+     
+    }
     return (    
         
         <div className="containerr">
@@ -45,10 +61,11 @@ function SideBarM() {
                 <span className="nav-item">Settings</span>
               </Link></li>
               
-              <li><Link className="aC link logout" to="/logout">
+              <li><button className="aC link logout" onClick={logout}>
+                
                 <i className="fas fa-sign-out-alt"></i>
                 <span className="nav-item">Log out</span>
-                </Link></li>
+                </button></li>
             </ul>
           </nav>
       

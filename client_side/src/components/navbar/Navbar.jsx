@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import Cookies from 'js-cookie';
-
 function Navbar() {
   const [active, setActive] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -21,8 +20,7 @@ function Navbar() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const username = Cookies.get('accessToken');
-        console.log(username);
+       
         const response = await fetch('/api/categories', {
           method: 'GET',
           headers: {
@@ -40,6 +38,30 @@ function Navbar() {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+       
+        const response = await fetch('/api/users/profile', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch');
+        }
+        const json = await response.json() ;
+        console.log(json.success);
+        localStorage.setItem("currentUser",JSON.stringify(json.success));
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+    fetchData();
+  }, []);
+  
   
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
@@ -64,7 +86,7 @@ function Navbar() {
             <Link className="link" to="/dashboard">
               <div className="user">
                 <img
-                  src={"http://localhost:4000/" + currentUser.img || "img/noavatar.png"}
+                  src={currentUser.googleId ? currentUser.img :  "http://localhost:4000/" + currentUser.img }
                   alt=""
                 />
                 <span>{currentUser?.username}</span>
