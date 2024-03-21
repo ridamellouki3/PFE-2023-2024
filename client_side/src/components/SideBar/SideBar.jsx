@@ -8,12 +8,21 @@ import Navbar from "../navbar/Navbar";
 
 
 function SideBar() {
-    
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
     
     return (    
         <>
+        {currentUser.role =='Manager' &&(
+            <SideBarM/>
+        )}
+        {currentUser.role =='Service Provider' &&(
+            <SideBarSP/>
+        )}
+        {currentUser.role =='Client' &&(
+            <SideBarC/>
+        )}
         
-        <SideBarM/>
         </>
       
     

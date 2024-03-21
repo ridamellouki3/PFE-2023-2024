@@ -70,7 +70,6 @@ const login = async (req, res) => {
       );
       const { password, ...info } = user._doc;
 
-      console.log(info);
       setCookie(res, token);
       return res.status(200).send({success:info});
     } else {
@@ -95,15 +94,17 @@ const login = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  if (req.user) {
-    req.logout();
-  }
-  req.session.destroy();
-  const cookies = req.cookies;
-  for (const cookieName in cookies) {
-    res.clearCookie(cookieName);
-  }
-  return res.status(200).json({success:"User has been logged out."});
+  try{
+
+    req.session.destroy();
+    const cookies = req.cookies;
+    for (const cookieName in cookies) {
+      res.clearCookie(cookieName);
+    }
+    return res.status(200).json({success:"User has been logged out."});
+  }catch(err){console.log(err.message);
+    res.status(500).json(err)}
+  
 };
 module.exports = {
   registre,

@@ -116,10 +116,12 @@ const filterServices = async (req, res) => {
 
 const ServicesByCategorie = async (req,res)=>{
   try{
+    const page = req.query.p || 0;
+    const servicePerPage = 10;
     const categorieId = req.params ;
     const categorie = await Categorie.findById(new ObjectId(categorieId));
   if(categorie){
-    const services = await Service.find({categorieId : categorie._id}).limit(10).populate({
+    const services = await Service.find({categorieId : categorie._id}).skip(page*servicePerPage).limit(servicePerPage).populate({
       path:'userId',
       select:'username email gender img country verified',
     }).populate({path:'categorieId',select:'name'});

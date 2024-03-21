@@ -15,7 +15,7 @@ function SideBarM() {
       const json = await response.json();
       console.log(json);
       if(!response.ok){
-        
+        console.log(json);
       }else{
         localStorage.removeItem("currentUser"); 
         navigate('/');
@@ -30,7 +30,7 @@ function SideBarM() {
             <ul>
               <li><Link className="aC link logoC" to="/">
                 <img src="" alt="" />
-                <span className="nav-item">Youuuurs</span>
+                <span className="nav-item">WorkUp</span>
                 </Link>
                 </li>
               <li> <Link className="aC link" to="/profile">

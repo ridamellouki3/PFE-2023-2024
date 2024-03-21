@@ -188,7 +188,7 @@ const upload = multer({ storage: storage });
 router.post("/",upload.single("cover"), verifyToken, createService);
 router.delete("/:id", verifyToken, deleteService);
 router.get("/My-Services/",verifyToken,);
-router.get("/ServicesByCategorie/:id",ServicesByCategorie);
+router.get("/ServicesByCategorie/:id?p",ServicesByCategorie);
 router.get("/single/:id", getService);
 router.get("/", filterServices);
 
