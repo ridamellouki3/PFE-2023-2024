@@ -18,14 +18,21 @@ import AddProvider from "./pages/addProvider/AddProvider";
 import Profile from "./pages/Profile/Profile";
 import Settings from "./pages/Settings/Settings";
 import TelegramAPI from "./pages/telegramAPI/telegramAPI"
+import Services from "./pages/services/Services";
 
 function App() {
+
+
+
   const Layout = () => {
     return (
       <div className="app">
-        <Navbar />
-        <Outlet />
-        <Footer />
+        
+              <Navbar />
+              <Outlet />
+              <Footer />
+        
+       
       </div>
     );
   };
@@ -43,6 +50,10 @@ function App() {
         {
           path: "/service/:id",
           element: <Service />,
+        }, 
+        {
+          path: "/services",
+          element: <Services />,
         }, 
         {
           path: "/register",

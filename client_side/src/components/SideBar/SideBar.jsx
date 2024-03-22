@@ -13,6 +13,7 @@ function SideBar() {
     
     return (    
         <>
+        
         {currentUser.role =='Manager' &&(
             <SideBarM/>
         )}
@@ -22,6 +23,7 @@ function SideBar() {
         {currentUser.role =='Client' &&(
             <SideBarC/>
         )}
+        
         
         </>
       

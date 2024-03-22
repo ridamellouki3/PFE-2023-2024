@@ -138,11 +138,21 @@ const ServicesByCategorie = async (req,res)=>{
   }
 }
 
+const getServices = async (req, res, next) => {
+
+  try {
+    const Services = await Service.find();
+    res.status(200).send(Services);
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports = {
   createService,
   deleteService,
   getService,
   filterServices,
-  ServicesByCategorie
+  ServicesByCategorie,
+  getServices
 };

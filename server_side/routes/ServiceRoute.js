@@ -4,7 +4,8 @@ const {
   deleteService,
   getService,
   filterServices,
-  ServicesByCategorie
+  ServicesByCategorie,
+  getServices
 } = require("../controllers/ServiceController");
 const verifyToken = require("../middleware/JWT");
 const router = express.Router();
@@ -191,5 +192,7 @@ router.get("/My-Services/",verifyToken,);
 router.get("/ServicesByCategorie/:id",ServicesByCategorie);
 router.get("/single/:id", getService);
 router.get("/", filterServices);
+
+
 
 module.exports = router;

@@ -22,6 +22,8 @@ function SideBarM() {
       }
      
     }
+
+
     return (    
         
         <div className="containerr">
@@ -61,11 +63,11 @@ function SideBarM() {
                 <span className="nav-item">Settings</span>
               </Link></li>
               
-              <li><button className="aC link logout" onClick={logout}>
+              <li><div className="aC link logout" onClick={logout}>
                 
                 <i className="fas fa-sign-out-alt"></i>
                 <span className="nav-item">Log out</span>
-                </button></li>
+                </div></li>
             </ul>
           </nav>
       

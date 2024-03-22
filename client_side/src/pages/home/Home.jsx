@@ -23,7 +23,7 @@ function Home() {
       </Slide>  
       
       <div className="Category">
-      <h1 className="hr"> Barber  </h1>
+      <h1 className="hr"> House Cleaner  </h1>
       <hr />
       </div>
       <Slide slidesToShow={5} arrowsScroll={3}>
@@ -33,7 +33,7 @@ function Home() {
       </Slide> 
 
       <div className="Category">
-      <h1 className="hr"> Barber  </h1>
+      <h1 className="hr"> Personal Trainer  </h1>
       <hr />
       </div>
       <Slide slidesToShow={5} arrowsScroll={2}>

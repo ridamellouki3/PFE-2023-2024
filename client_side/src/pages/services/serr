@@ -1,0 +1,98 @@
+
+
+    <div className="gigs">
+      <div className="container">
+        <span className="breadcrumbs">Liverr  Graphics & Design </span>
+        <h1>AI Artists</h1>
+        <p>
+          Explore the boundaries of art and technology with Liverr's AI artists
+        </p>
+        <div className="menu">
+          <div className="left">
+            <span>Budget</span>
+            <input type="number" placeholder="min" />
+            <input  type="number" placeholder="max" />
+            <button >Apply</button>
+          </div>
+          <div className="right">
+            <span className="sortBy">Sort by</span>
+            <span className="sortType">
+              
+            </span>
+            <img src="./img/down.png" alt=""  />
+           
+          </div>
+        </div>
+        <div className="cards">
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+    ////fetchhing
+    import React, { useEffect, useRef, useState } from "react";
+    import "./Services.css";
+    import CatCard from "../../components/catCard/CatCard";
+    
+    function Services() {
+    
+      const [services, setServices] = useState([]); // To store fetched services data
+      const [isLoading, setIsLoading] = useState(false); // To indicate loading state
+      const [error, setError] = useState(null); // To capture any errors
+    
+    
+      useEffect(() => {
+        const fetchData = async () => {
+          setIsLoading(true);
+          setError(null);
+      
+          try {
+            const response = await fetch('/api/services', {
+              method: 'GET',
+            })
+            .catch((networkError) => {
+              throw new Error('Network request failed:', networkError); // Handle network errors explicitly
+            }); // Catch network errors specifically
+      
+            if (!response.ok) {
+              throw new Error(`API request failed with status ${response.status}`);
+            }
+      
+            const data = await response.json();
+            setServices(data);
+          } catch (err) {
+            console.error('Error fetching data:', err); // Log error for debugging
+            setError(err.message);
+          } finally {
+            setIsLoading(false);
+          }
+        };
+      
+        fetchData();
+      }, []); 
+      
+    
+      return (
+        <div>
+          {isLoading && <p>Loading services...</p>}
+          {error && <p>Error: {error}</p>}
+          {services.length > 0 && (
+            <ul>
+              {services.map((service) => (
+                <li key={service.id}>{service.name}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      );
+    }
+      
+    
+    
+    export default Services ;
+
+
