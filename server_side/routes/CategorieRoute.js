@@ -9,4 +9,5 @@ const router = express.Router();
 router.get("/", getCategories);
 router.post("/", createCategorie);
 
+
 module.exports = router;

@@ -48,11 +48,11 @@ function App() {
           element: <Home />,
         },
         {
-          path: "/service/:id",
+          path: "/services/single/:id",
           element: <Service />,
         }, 
         {
-          path: "/services",
+          path: "/services/:id",
           element: <Services />,
         }, 
         {

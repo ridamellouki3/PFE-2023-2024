@@ -52,10 +52,9 @@ function Navbar() {
           throw new Error('Failed to fetch');
         }
         const json = await response.json() ;
-        console.log(json.success);
         localStorage.setItem("currentUser",JSON.stringify(json.success));
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error('Error fetching Profiles:', error);
       }
     };
     fetchData();
@@ -85,7 +84,7 @@ function Navbar() {
             <Link className="link" to="/dashboard">
               <div className="user">
                 <img
-                  src={currentUser.googleId ? currentUser.img :  "http://localhost:4000/" + currentUser.img }
+                  src={ currentUser.googleId ? currentUser.img :  "http://localhost:4000/" + currentUser.img }
                   alt=""
                 />
                 <span>{currentUser?.username}</span>

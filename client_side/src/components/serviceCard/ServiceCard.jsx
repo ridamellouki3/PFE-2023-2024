@@ -1,21 +1,22 @@
 import React from 'react'
 import './ServiceCard.css'
-
+import { Link } from 'react-router-dom';
 
 const ServiceCard =  ({ item }) => {
   return (
-    <Link to="/gig/123" className="link">
+    <Link to={`single/${item._id}`} className="link">
       <div className="gigCard">
-        <img src={item.img} alt="" />
+        <img src={"http://localhost:4000/" + "cover-1709022667597-639855455.jpg"} alt="" />
         <div className="info">
           <div className="user">
-            <img src={item.pp} alt="" />
-            <span>{item.username}</span>
+            <img src="/img/heart.png"  alt="" />
+            <span>{item.userId.username}</span>
           </div>
           <p>{item.desc}</p>
           <div className="star">
             <img src="./img/star.png" alt="" />
-            <span>{item.star}</span>
+            <span> {!isNaN(item.totalStars / item.starNumber) &&
+                Math.round(item.totalStars / item.starNumber)}</span>
           </div>
         </div>
         <hr />

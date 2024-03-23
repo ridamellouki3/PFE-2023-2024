@@ -1,53 +1,163 @@
-export const cards = [
+export const cards1 = [
   {
     id: 1,
-    title: "AI Artists",
-    desc: "Add talent to AI",
-    img: "https://images.pexels.com/photos/7532110/pexels-photo-7532110.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-  },
-  {
+    title: "Garden Consulting",
+    desc: "Expert advice ",
+    img: "https://media.istockphoto.com/id/1263456569/fr/photo/bouquet-radis-rouges-vient-de-sortir-dun-lit-de-jardin.jpg?b=1&s=612x612&w=0&k=20&c=LFE0sSDc0Ht4wsyhIC9zqsKBCrzn_cVWKbAnTz1Terc="
+  }
+  ,
+   {
     id: 2,
-    title: "Logo Design",
-    desc: "Build yor brand",
-    img: "https://images.pexels.com/photos/11295165/pexels-photo-11295165.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+    title: "Landscape Design",
+    desc: "Beautiful outdoor space",
+    img: "https://media.istockphoto.com/id/1471031743/fr/photo/belle-femme-souriante-arrangeant-plantes-et-fleurs-dans-une-serre.jpg?b=1&s=612x612&w=0&k=20&c=AunWgNHEIQ64u5qZS9i2cijnpknun7twJS3M3EN8ke8="
   },
   {
     id: 3,
-    title: "WordPress",
-    desc: "Customize your site",
-    img: "https://images.pexels.com/photos/4371669/pexels-photo-4371669.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+    title: "Lawn Care",
+    desc: "Keep your lawn healthy ",
+    img: "https://media.istockphoto.com/id/95003436/fr/photo/printemps-gardering.jpg?b=1&s=612x612&w=0&k=20&c=9WMKtMvWdvaaONBLKz9divN6yIdoXl_jfT6R69r-lN8="
   },
   {
     id: 4,
-    title: "Voice Over",
-    desc: "Share your message",
-    img: "https://images.pexels.com/photos/7608079/pexels-photo-7608079.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+    title: "Tree Trimming & Removal",
+    desc: "Maintain safety ",
+    img: "https://media.istockphoto.com/id/1246030906/fr/photo/pots-biod%C3%A9gradables-r%C3%A2teau-et-b%C3%AAche-sur-fond-en-bois-outils-de-jardin.jpg?b=1&s=612x612&w=0&k=20&c=48hs3unH2CuJlcZ-1flCt3QfGZRbAZ14-NpsVsdYNv4="
   },
   {
     id: 5,
-    title: "Video Explainer",
-    desc: "Engage your audience",
-    img: "https://images.pexels.com/photos/13388047/pexels-photo-13388047.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+    title: "Garden Maintenance",
+    desc: "Design your garden ",
+    img: "https://media.istockphoto.com/id/1307160300/fr/photo/cultiver-une-plante-au-sol-gardering-dans-le-jardin-croissance-des-fleurs.jpg?b=1&s=612x612&w=0&k=20&c=7_CbzUvHczLtiohr7IpMuZLmIyLTdqTXQZxiqqvmLOY="
   },
   {
     id: 6,
-    title: "Social Media",
-    desc: "Reach more customers",
-    img: "https://images.pexels.com/photos/11378899/pexels-photo-11378899.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+    title: "Pest Control",
+    desc: "Protect your plant ",
+    img: "https://media.istockphoto.com/id/483201265/fr/photo/gardering.jpg?b=1&s=612x612&w=0&k=20&c=jcRGkn7xk9VgxnbNMMzKolfzgaLrypeI7ovi_BVfw8M="
   },
   {
     id: 7,
-    title: "SEO",
-    desc: "Unlock growth online",
-    img: "https://images.pexels.com/photos/4820241/pexels-photo-4820241.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+    title: "Irrigation Repair",
+    desc: " plants receive the water ",
+    img: "https://media.istockphoto.com/id/1324904413/fr/photo/femme-au-foyer-gaie-faisant-du-garder-pr%C3%A8s-dune-maison-de-vacances.jpg?b=1&s=612x612&w=0&k=20&c=5nbza1GRhqEJzhz1M1jLbvi4lKt8GE-Wp_iXqBW74HY="
   },
   {
     id: 8,
-    title: "Illustration",
-    desc: "Color you dreams",
-    img: "https://images.pexels.com/photos/15032623/pexels-photo-15032623.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-  },
+    title: "Patio  Installation",
+    desc: "For  relaxation",
+    img: "https://media.istockphoto.com/id/1282184414/fr/photo/choux-pourpres-de-choux-de-bruxelles-poussant-sur-la-plante-dans-le-jardin-organique.jpg?b=1&s=612x612&w=0&k=20&c=Vj--2a6U8DMXPCUiTufD9rxkubrHV-TsaKBTZNGlOSg="
+  }
+  
 ];
+
+
+
+export const cards2 = [
+  {
+    id: 1,
+    title: "Garden Advice",
+    desc: "Expert tips for your plants",
+    img: "https://images.pexels.com/photos/4239037/pexels-photo-4239037.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    id: 2,
+    title: "Dream Landscape",
+    desc: "Design your perfect space",
+    img: "https://images.pexels.com/photos/4239035/pexels-photo-4239035.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    id: 3,
+    title: "Lawn Care",
+    desc: "Healthy, weed-free lawn",
+    img: "https://images.pexels.com/photos/3768914/pexels-photo-3768914.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    id: 4,
+    title: "Tree Trimming",
+    desc: "Maintain healthy, safe trees",
+    img: "https://images.pexels.com/photos/1109171/pexels-photo-1109171.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    id: 5,
+    title: "Garden Care",
+    desc: "Keep your garden thriving",
+    img: "https://images.pexels.com/photos/4239130/pexels-photo-4239130.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    id: 6,
+    title: "Pest Control",
+    desc: "Protect plants from pests",
+    img: "https://images.pexels.com/photos/3360701/pexels-photo-3360701.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    id: 7,
+    title: "Water Solutions",
+    desc: "Ensure proper irrigation",
+    img: "https://images.pexels.com/photos/4239091/pexels-photo-4239091.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    id: 8,
+    title: "Clean & Save",
+    desc: "Change your Envirement",
+    img: "https://images.pexels.com/photos/4107286/pexels-photo-4107286.jpeg?auto=compress&cs=tinysrgb&w=600",
+  },
+  
+];
+
+export const cards3 = [
+  {
+    id: 1,
+    title: "Fitness Guidance",
+    desc: "Expert advice for your",
+    img :"https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    id: 2,
+    title: "Strength Building",
+    desc: "Develop strength ",
+    img :"https://images.pexels.com/photos/2011383/pexels-photo-2011383.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    id: 3,
+    title: "Weight Management",
+    desc: "Reach your weight ",
+    img :"https://images.pexels.com/photos/1544774/pexels-photo-1544774.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    id: 4,
+    title: "Personalized Workouts",
+    desc: "Tailored plans ",
+    img :"https://images.pexels.com/photos/3912953/pexels-photo-3912953.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    id: 5,
+    title: "Improved Nutrition",
+    desc: "Guidance  for performance",
+    img :"https://images.pexels.com/photos/28080/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    id: 6,
+    title: "Motivation & Support",
+    desc: "Stay accountable and reach your fitness potential",
+    img :"https://images.pexels.com/photos/1229356/pexels-photo-1229356.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    id: 7,
+    title: "Injury Prevention",
+    desc: "Train safely ",
+    img :"https://images.pexels.com/photos/791763/pexels-photo-791763.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    id: 8,
+    title: "Improved Flexibility",
+    desc: " reduce stiffness",
+    img :"https://images.pexels.com/photos/1144864/pexels-photo-1144864.jpeg?auto=compress&cs=tinysrgb&w=600"
+  }
+];
+
+
+
 
 export const projects = [
   {

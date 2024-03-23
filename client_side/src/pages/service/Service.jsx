@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Service.css";
 import { Slider } from "infinite-react-carousel/lib";
 import Reviews from "../../components/Reviews/Reviews";
@@ -6,28 +6,60 @@ import { useParams } from "react-router-dom";
 
 function Service() {
 
-  const {id} = useParams();
+  const {id} = useParams()
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [service, setService] = useState(null);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const response = await fetch(`/api/services/single/${id}`);
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        setService(responseData.service);
+      } catch (err) {
+        setError(err.message);
+        console.log(err)
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
+   
   return (
+
     <div className="gig">
+          {isLoading ? "Loading..." : error ? "Something's Wrong" : (service && (
+
       <div className="container">
         <div className="left">
-          <span className="breadcrumbs">Liverr  Graphics & Design </span>
-          <h1>I will create ai generated art for you</h1>
+          <span className="breadcrumbs"> </span>
+          <h4>{service.desc}</h4>
+          <h1>{service.title}<span className="priceService">{service.price}$</span></h1>
           <div className="user">
             <img
               className="pp"
-              src="https://images.pexels.com/photos/720327/pexels-photo-720327.jpeg?auto=compress&cs=tinysrgb&w=1600"
+              src={service.userId.img ? service.userId.img :  "http://localhost:4000/" + service.userId.img }
               alt=""
             />
-            <span>Anna Bell</span>
+            <span>{service.userId.username}</span>
             <div className="stars">
-              <img src="/img/star.png" alt="" />
-              <img src="/img/star.png" alt="" />
-              <img src="/img/star.png" alt="" />
-              <img src="/img/star.png" alt="" />
-              <img src="/img/star.png" alt="" />
-              <span>5</span>
+
+            {Array(service.starNumber).fill().map((_, i) => (
+           <img src="/img/star.png" alt="" key={i} />
+              ))}
+
+              <span>{service.starNumber} </span>
             </div>
           </div>
           <Slider slidesToShow={1} arrowsScroll={1} className="slider">
@@ -60,12 +92,50 @@ function Service() {
             found nowhere else. If you have any questions you're more than
             welcome to send me a message.
           </p>
+          <div className="box">
+                  <div className="items">
+                  <div className="item">
+                      
+                      {
+                      service.userId.verified && (
+                        <>                        <span>Verified</span> 
+                      <img src="/img/verified.png" className="verified"/>    
+                      </>
+                      )
+                    }
+                    </div>
+                    <div className="item">
+                      <span className="title">From  :</span>
+                      <span className="desc">{service.userId.country}</span>
+                    </div>
+
+                    <div className="item">
+                      <span className="title">Member since :</span>
+                      <span className="desc">Aug 2022</span>
+                    </div>
+                    <div className="item">
+                      <span className="title">Gender: </span>
+                      <span className="desc">{service.userId.gender}</span>
+                    </div>
+                    <div className="item">
+                      <span className="title">Email :</span>
+                      <span className="desc">{service.userId.email}</span>
+                    </div>
+                    <div className="item">
+                      <span className="title">Languages :</span>
+                      <span className="desc">English </span>
+                    </div>
+                   
+                  </div>
+                  <hr />
+             </div>
          
           <Reviews serviceId={id}/>
         </div>
         
-      </div>
+      </div>))}
     </div>
+    
   );
 }
 

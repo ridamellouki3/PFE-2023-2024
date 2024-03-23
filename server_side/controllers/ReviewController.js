@@ -5,7 +5,7 @@ const createReview = async (req, res) => {
   if (req.role == "Service Provider") {
     return res.status(403).json("Service Providers can't create a review!");
   }
-
+  console.log(req.body.serviceId)
   try {
     const review = await Review.findOne({
       serviceId: req.body.serviceId,

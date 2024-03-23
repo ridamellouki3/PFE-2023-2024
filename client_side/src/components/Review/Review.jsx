@@ -2,7 +2,7 @@ import React from 'react'
 import "./Review.css"
 
 
-const Review = ()=> {
+const Review = ({review})=> {
   return (
      
     <div className="item">
@@ -24,20 +24,14 @@ const Review = ()=> {
           </div>
         </div>
         <div className="stars">
-          <img src="/img/star.png" alt="" />
-          <img src="/img/star.png" alt="" />
-          <img src="/img/star.png" alt="" />
-          <img src="/img/star.png" alt="" />
-          <img src="/img/star.png" alt="" />
-          <span>5</span>
+        {Array(review.star).fill().map((_, i) => (
+           <img src="/img/star.png" alt="" key={i} />
+              ))}
+         
+          <span>{review.star}</span>
         </div>
         <p>
-          I just want to say that art_with_ai was the first, and after
-          this, the only artist Ill be using on Fiverr. Communication was
-          amazing, each and every day he sent me images that I was free to
-          request changes to. They listened, understood, and delivered
-          above and beyond my expectations. I absolutely recommend this
-          gig, and know already that Ill be using it again very very soon
+          {review.desc}
         </p>
         <div className="helpful">
           <span>Helpful?</span>

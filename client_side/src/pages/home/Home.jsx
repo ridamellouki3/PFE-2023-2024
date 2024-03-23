@@ -4,7 +4,7 @@ import Featured from "../../components/featured/Featured";
 import Slide from "../../components/slide/Slide";
 import CatCard from "../../components/catCard/CatCard";
 import ProjectCard from "../../components/projectCard/ProjectCard";
-import { cards, projects } from "../../data";
+import { cards1,cards2,cards3, projects } from "../../data";
 import Quick from "../../components/Quick/Quick";
 
 function Home() {
@@ -12,22 +12,22 @@ function Home() {
     <div className="home">
       <Featured />
       <div className="Category">
-      <h1 className="hr"> Barber  </h1>
+      <h1 className="hr">  Gardening </h1>
       <hr />
       </div>
      <Slide slidesToShow={5} arrowsScroll={5}>
-        {cards.map((card) => (
+        {cards1.map((card) => (
           <CatCard key={card.id} card={card} />
         ))
         }
       </Slide>  
       
       <div className="Category">
-      <h1 className="hr"> House Cleaner  </h1>
+      <h1 className="CatTitle"> House Cleaner  </h1>
       <hr />
       </div>
       <Slide slidesToShow={5} arrowsScroll={3}>
-        {cards.map((card) => (
+        {cards2.map((card) => (
           <CatCard key={card.id} card={card} />
         ))}
       </Slide> 
@@ -37,7 +37,7 @@ function Home() {
       <hr />
       </div>
       <Slide slidesToShow={5} arrowsScroll={2}>
-        {cards.map((card) => (
+        {cards3.map((card) => (
           <CatCard key={card.id} card={card} />
         ))}
       </Slide> 

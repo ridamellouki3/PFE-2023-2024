@@ -147,6 +147,8 @@
               .title {
                 font-weight: 300;
               }
+
+             
             }
           }
 
@@ -296,4 +298,17 @@
       }
     }
   }
+}
+
+.priceService{
+  padding-left: 30px ;
+  color: #2794b0;  
+}
+
+.desc{
+  padding-left: 10px ;
+}
+
+.verified{
+  border-radius: 50%;
 }
