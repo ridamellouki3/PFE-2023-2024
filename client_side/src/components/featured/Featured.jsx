@@ -46,11 +46,11 @@ function Featured() {
 
    
     categories.map((cat)=>{
-      (search == cat.name ? navigate(`/services/ServicesByCategorie/${cat._id}`) : "")
+      (search == cat.name ? navigate(`/services/${cat._id}`) : "")
       console.log(cat.name)
     })
     
-    
+  
     //navigate(`/services/${search}`)
 
   }

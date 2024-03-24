@@ -36,13 +36,16 @@ const Orders = () => {
     fetchData();
   }, []);
 
-
-
+ 
   return (
     <div className="orders">
       <SideBar/>
-      
-        <div className="container">
+       { isLoading ?  "Loading" : error ? "Error " :   
+         (
+
+
+            <div className="container">
+                 
         <div className="title">
           <h1>Orders</h1>
         </div>
@@ -54,7 +57,9 @@ const Orders = () => {
               <th>Price</th>
               <th>Contact</th>
             </tr>
-            <tr>
+            {
+            orders.map((order)=>(
+            <tr key={order._id}>             
               <td>
                 <img
                   className="image"
@@ -62,18 +67,20 @@ const Orders = () => {
                   alt=""
                 />
               </td>
-              <td>Stunning concept art</td>
-              <td>59.<sup>99</sup></td>
-              <td>Maria Anders</td>
+              <td>{order.title}</td>
+              <td>{order.price}.<sup>99</sup></td>
               <td>
                 <img className="message" src="./img/message.png" alt="" />
               </td>
             </tr>
-            
+             ))}
             </tbody>
           </table>
       </div>
-     
+         
+        
+       )
+     }
     </div>
   );
 };

@@ -33,7 +33,10 @@ const getMessages = async (req, res) => {
   try {
     const messages = await Message.find({ conversationId: req.params.id }).sort(
       { createdAt: 1 }
-    );
+    ).populate({
+      path:'userId',
+      select : " username email gender img country verified "
+    })
     return res.status(200).send({messages:messages});
   } catch (error) {
     console.log(error.message);

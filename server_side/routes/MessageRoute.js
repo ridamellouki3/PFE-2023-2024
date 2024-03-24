@@ -72,6 +72,6 @@ const router = express.Router();
  */
 
 router.post("/", verifyToken, createMessage);
-router.get("/", verifyToken, getMessages);
+router.get("/:id", verifyToken, getMessages);
 
 module.exports = router;

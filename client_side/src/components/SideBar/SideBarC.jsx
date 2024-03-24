@@ -48,10 +48,7 @@ function SideBarC() {
                 <i className="fas fa-tasks"></i>
                 <span className="nav-item">Messages</span>
               </Link></li>
-              <li><Link className="aC link" to="/settings">
-                <i className="fas fa-cog"></i>
-                <span className="nav-item">Settings</span>
-              </Link></li>
+              
               
               <li><div className="aC link logout" onClick={logout}>
                 <i className="fas fa-sign-out-alt"></i>

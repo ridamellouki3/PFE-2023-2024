@@ -48,13 +48,18 @@ const getConversations = async (req, res) => {
       req.role == "Service Provider"
         ? { serviceProviderId: req.userId }
         : { clientId: req.userId }
-    ).sort({ updatedAt: -1 });
+    ).sort({ updatedAt: -1 }).populate({
+      path:(req.role == "Service Provider")?("clientId"):('serviceProviderId'),
+      select : " username email gender img country verified "
+    })
     return res.status(200).send({success:conversations});
   } catch (err) {
     console.log(err.message);
     return res.status(500).json({error:err.message});
   }
 };
+
+
 module.exports = {
   createConversation,
   getSingleConversation,

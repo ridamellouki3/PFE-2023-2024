@@ -20,7 +20,7 @@ function Services() {
       console.log(id)
       //65da33c51b372b48dba8ad73
       try {
-        const response = await fetch(`api/services/ServicesByCategorie/${id}`,{
+        const response = await fetch(`/api/services/ServicesByCategorie/${id}`,{
           method:'GET'
         }); // Replace with your actual API endpoint
 
