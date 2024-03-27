@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 function SideBarSP() {
+
+  const currentUser = (localStorage.getItem("currentUser") != "undefined" ? JSON.parse(localStorage.getItem("currentUser")) : null )
+
     
   const navigate = useNavigate();
   const logout = async (e) =>{
@@ -31,7 +34,7 @@ function SideBarSP() {
           <nav>
             <ul>
               <li><Link className="aC link logoC" to="/">
-                <img src="" alt="" />
+                <img src={"http://localhost:4000/"+currentUser.img} alt="" />
                 <span className="nav-item">Youuuurs</span>
                 </Link>
                 </li>

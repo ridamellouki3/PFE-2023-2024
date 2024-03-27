@@ -13,8 +13,7 @@ const createService = async (req, res) => {
     return res.status(403).json({error:"You should upload cover for your Service !!"});
   }
   console.log(req.file);
-  const categorie = await Categorie.findOne({ name: req.body.categorie });
-  console.log(categorie);
+  const categorie = await Categorie.findOne({ _id:new ObjectId(req.body.categorie)  });  console.log(categorie);
   if (!categorie) {
     return res.status(403).json({error:"There is no Categorie with this name !!!"});
   }
@@ -138,15 +137,21 @@ const ServicesByCategorie = async (req,res)=>{
   }
 }
 
-const getServices = async (req, res, next) => {
+
+const getServices = async (req, res) => {
 
   try {
-    const Services = await Service.find();
+    const Services = await Service.find({userId:req.userId}).populate({
+      path:'categorieId',
+      select:'name'
+    })
     res.status(200).send(Services);
   } catch (err) {
-    next(err);
+    console.log(err.message);
+    return res.status(500).json({error:err.message})
   }
 };
+
 
 module.exports = {
   createService,

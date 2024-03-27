@@ -8,7 +8,9 @@ import { useParams } from 'react-router-dom'
 const Reviews = ({serviceId})=> {
 
   console.log(serviceId)
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  const currentUser = (localStorage.getItem("currentUser") != "undefined" ? JSON.parse(localStorage.getItem("currentUser")) : null )
+
   const userId = currentUser?._id 
 
   const [isLoading, setIsLoading] = useState(false);

@@ -62,13 +62,13 @@ function Featured() {
         <div className="left">
           
           <div className="search">
-           
+            <form onSubmit={handelSubmit}  className="searchInput">
             <div className="searchInput">
               <img src="./img/search.png" alt="" />
               <input type="text" placeholder='Search here' onChange={(e)=>{setSearch(e.target.value)}} />
             </div>
             <button onClick={handelSubmit}>Search</button>
-           
+            </form>
 
           </div>
         

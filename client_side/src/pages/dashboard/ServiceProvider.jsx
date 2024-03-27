@@ -33,6 +33,10 @@ function App() {
       element: <Layout />,
       children: [
         {
+          path: "/",
+          element: <Profile />,
+        },
+        {
           path: "/profile",
           element: <Profile />,
         },

@@ -6,23 +6,24 @@ import SideBar from "../../components/SideBar/SideBar";
 function MyServices() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const [isLoading, setIsLoading] = useState(false);
-  const [services, setServices] = useState(null);
+  const [services, setServices] = useState([]);
   const [error, setError] = useState(null);
-    
 
-  useEffect(() => {
-    const fetchData = async () => {
+
+
+  const fetchData = async () => {
       setIsLoading(true);
       setError(null);
 
       try {
-        const response = await fetch("/api/services//My-Services/")
+        const response = await fetch("/api/services/My-Services/")
         if (!response.ok) {
           throw new Error(`API request failed with status ${response.status}`);
         }
 
         const responseData = await response.json();
         setServices(responseData);
+        console.log(services)
 
       } catch (err) {
         setError(err.message);
@@ -30,16 +31,45 @@ function MyServices() {
       } finally {
         setIsLoading(false);
       }
-    };
+  }; 
+
+  useEffect(() => {
+    
     fetchData()
     
   }, []);
 
+  
+  const handleClick = async (e) => {
+    e.preventDefault;
+    try {
+
+      const response = await fetch(`/api/services/${e}`, {
+        method: "DELETE",
+      });
+
+      const json = await response.json();
+      console.log(json);
+
+      if (!response.ok) {
+        setError(json.error);
+      }else{
+        fetchData()
+      } 
+
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  console.log(currentUser.img)
 
   return (
-    <div className="myGigs">
+    <div className="myServices">
       <SideBar/>
-      <div className="container">
+      { isLoading ? "Loading " : error ? "Error" :
+        (  services.length == 0 ? "Nothings" :
+        <div className="container">
         <div className="title">
           <h1>My Services</h1>
           
@@ -52,24 +82,28 @@ function MyServices() {
             <th>Sales</th>
             <th>Action</th>
           </tr>
-          <tr>
+          
+            {services.map((service)=>(
+            <tr key={service._id} >
             <td>
               <img
                 className="image"
-                src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                src={ "http://localhost:4000/" + service.cover}
                 alt=""
               />
             </td>
-            <td>Stunning concept art</td>
-            <td>59.<sup>99</sup></td>
-            <td>13</td>
+            <td>{service.title}</td>
+            <td>{service.price}<sup>99</sup></td>
+            <td>{service.sales}</td>
             <td>
-              <img className="delete" src="./img/delete.png" alt="" />
+              <img className="delete" src="./img/delete.png" onClick={()=>handleClick(service._id)} />
             </td>
+            
           </tr>
-          
+          ))}
         </table>
       </div>
+      )}
     </div>
   );
 }

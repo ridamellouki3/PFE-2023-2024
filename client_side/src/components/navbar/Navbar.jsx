@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+  import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 function Navbar() {
@@ -51,8 +51,12 @@ function Navbar() {
         if (!response.ok) {
           throw new Error('Failed to fetch');
         }
+
+        
         const json = await response.json() ;
         localStorage.setItem("currentUser",JSON.stringify(json.success));
+
+      
       } catch (error) {
         console.error('Error fetching Profiles:', error);
       }
@@ -61,7 +65,7 @@ function Navbar() {
   }, []);
   
   
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const currentUser = (localStorage.getItem("currentUser") != "undefined" ? JSON.parse(localStorage.getItem("currentUser")) : null )
 
   return (
     <div className={active ? "navbar active" : "navbar"}>
@@ -81,7 +85,7 @@ function Navbar() {
             </>
           )}
           {currentUser ? (
-            <Link className="link" to="/dashboard">
+            <Link className="link" to="/profile">
               <div className="user">
                 <img
                   src={ currentUser.googleId ? currentUser.img :  "http://localhost:4000/" + currentUser.img }

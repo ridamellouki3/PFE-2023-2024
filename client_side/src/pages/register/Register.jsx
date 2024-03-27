@@ -15,7 +15,9 @@ function Register() {
   const handleImage = (e) => {
     setImage(e.target.files[0]);
     console.log(img);
+
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -138,7 +140,7 @@ function Register() {
                 <label htmlFor="">Upload Image</label>
                 <input type="file" onChange={handleImage} />
                 <img src={img} alt="" />
-                {error && <div class="bar error">{error} </div>}
+                {error && <div className="bar error">{error} </div>}
                 {success && (
                   <div class="bar success">
                     <i class="ico">&#10004;</i> {success}

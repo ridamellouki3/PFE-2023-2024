@@ -44,7 +44,18 @@ const Messages = () => {
   return (
     <div className="messages">
               <SideBar/>
-      { isLoading ? "Loading" : error ? "Error" :(
+      { isLoading ? "Loading" : error ? "Error" :
+        conversations.length == 0 ? (
+          <div className="container">
+                
+                <div className="title">
+                  <h1>No Conversation Yet </h1>
+                </div>
+
+          </div>
+      )
+      : 
+      (
                
         <div className="container">
                 

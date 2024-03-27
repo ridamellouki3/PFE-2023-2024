@@ -33,6 +33,9 @@ function App() {
         {
           path: "/profile",
           element: <Profile />,
+        },{
+          path: "/",
+          element: <Profile />,
         },
         {
           path: "/messages",

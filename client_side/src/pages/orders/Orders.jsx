@@ -40,7 +40,16 @@ const Orders = () => {
   return (
     <div className="orders">
       <SideBar/>
-       { isLoading ?  "Loading" : error ? "Error " :   
+       { isLoading ?  "Loading" : error ? "Error " : 
+       orders.length == 0 ? (
+        <div className="container">
+              
+              <div className="title">
+                <h1>No Orders Yet </h1>
+              </div>
+
+        </div>
+        )  :
          (
 
 

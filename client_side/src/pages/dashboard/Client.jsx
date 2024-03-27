@@ -31,6 +31,10 @@ function Client() {
       element: <Layout />,
       children: [
         {
+          path: "/",
+          element: <Profile />,
+        },
+        {
           path: "/profile",
           element: <Profile />,
         },
@@ -46,10 +50,7 @@ function Client() {
           path: "/message/:id",
           element: <Message />,
         },
-        {
-          path: "/settings",
-          element: <Settings />,
-        },
+        
       ],
     }
   ]);
