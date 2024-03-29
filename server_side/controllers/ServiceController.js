@@ -4,23 +4,31 @@ const Categorie = require("../models/Categorie");
 const Review = require("../models/Review");
 const { isValidObjectId } = require("mongoose");
 const { ObjectId } = require("bson");
+const User = require("../models/User");
 
 const createService = async (req, res) => {
+  try {
   if (req.role !== "Service Provider" && req.role !== "Manager") {
     return res.status(403).json({error:"Only Service Provider can create a Service!"});
   }
   if (!req.file) {
     return res.status(403).json({error:"You should upload cover for your Service !!"});
   }
-  console.log(req.file);
-  const categorie = await Categorie.findOne({ _id:new ObjectId(req.body.categorie)  });  console.log(categorie);
+  const categorie = await Categorie.findOne({ name:req.body.categorie });
   if (!categorie) {
     return res.status(403).json({error:"There is no Categorie with this name !!!"});
   }
-  try {
+  if(req.userId !== "Service Provider"){
+    const serviceProvider = await User.findOne({_id : req.body.userId})
+    if(serviceProvider.managerId.toString() !== req.userId){
+      return res.status(401).json({error:"You Can create a Service Only for your service Provider!"})
+    }
+  }
+ 
+  
     const newService = new Service({
       ...req.body,
-      userId: (req.userId=='Service Provider')? req.userId : req.body.userId,
+      userId: ((req.role =='Service Provider')? req.userId : req.body.userId),
       categorieId: categorie._id,
       cover: req.file.filename,
     });
@@ -66,7 +74,7 @@ const getService = async (req, res) => {
   }
 };
 
-//This is FOR A USER IF HE NEED TO SEARCH ABOUT A SERVICE
+//This is FOR A USER IF HE want TO SEARCH for A SERVICE
 
 const filterServices = async (req, res) => {
   try {
@@ -138,14 +146,45 @@ const ServicesByCategorie = async (req,res)=>{
 }
 
 
-const getServices = async (req, res) => {
-
+const getMyServices = async (req, res) => {
+  if(req.role !== "Manager" && req.role !== "Manager"){
+    return res.status(401).json({error: "Only Service Provider And Manager have Services !!"})
+  }
   try {
-    const Services = await Service.find({userId:req.userId}).populate({
-      path:'categorieId',
-      select:'name'
-    })
-    res.status(200).send(Services);
+    if(req.role === "Service Provider"){
+      const services = await Service.find({userId:req.userId}).populate({
+        path:'categorieId',
+        select:'name'
+      }).populate({
+        path:"userId",
+        select:"username email gender img country verified"
+      })
+      if(services.length === 0){
+        return res.status(401).json({error:"No services yet"})
+      }
+      return res.status(201).json({services : services})
+    }else{
+      let services = [] ; 
+      const serviceProvider = await User.find({managerId : req.userId })
+      for (const s of serviceProvider) {
+        const service = await Service.find({ userId: s._id }).populate({
+          path: 'categorieId',
+          select: 'name'
+        }).populate({
+          path: "userId",
+          select: "username email gender img country verified"
+        });
+        console.log("service : ", service);
+        services.push(...service);
+      }
+      if(services.length ===0){
+        return res.status(401).json({error:"No services yet"})
+      }
+      return res.status(200).json(services);
+      }
+      
+      
+   
   } catch (err) {
     console.log(err.message);
     return res.status(500).json({error:err.message})
@@ -159,5 +198,5 @@ module.exports = {
   getService,
   filterServices,
   ServicesByCategorie,
-  getServices
+  getMyServices
 };

@@ -97,18 +97,33 @@ const confirm = async (req, res) => {
 };
 const completeOrder = async (req, res) => {
   try {
-    if (req.role !== "Service Provider") {
+    if (req.role !== "Service Provider" && req.role !=="Manager") {
       return res
         .status(500)
-        .json({error:"Only Service Provider Can Confirm Thier Orders."});
+        .json({error:"Only Service Provider and Manager Can Confirm Thier Orders."});
     }
-    const order = await Order.findOneAndUpdate(
-      { _id: req.params.id, serviceProviderId: req.userId },
-      {
-        $set: { isCompleteService: true },
+    
+    if(req.role ==="Service Provider"){
+      const order = await Order.findOneAndUpdate(
+        { _id: req.params.id, serviceProviderId: req.userId },
+        {
+          $set: { isCompleteService: true },
+        }
+      );
+      return res.status(201).json({success:"You complete this order successfully"});
+    }else{
+      const order = await Order.findOne({_id : req.params.id })
+      const serviceProvider = await User.findOne({_id : order.serviceProviderId})
+
+      if(serviceProvider.managerId.toString() !== req.userId ){
+        return res.status(401).json({error : "You can confim Only Orders For your Service Providers !!"});
+      }else{
+        order.updateOne({ $set: { isCompleteService: true }})
+        return res.status(201).json({success:"You complete this order successfully"});
       }
-    );
-    return res.status(201).json({success:"You complete this order successfully"});
+    }
+
+    
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({error:error.message});

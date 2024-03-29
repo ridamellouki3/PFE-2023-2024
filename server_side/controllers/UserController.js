@@ -158,10 +158,64 @@ const verifyProfile = async (req, res) => {
   }
 };
 
+const updateProfile = async (req,res)=>{
+  const { gender,password ,country,phone,desc ,username} = req.body;
+  let updates = {};
+  try{
+    if(username){
+    const user = await User.findOne({username : username})
+    if(user){
+      return res.status(501).json({error:"This username not available !!"})
+    }else{
+      updates.username = username ;
+    }
+  }
+  
+  if(gender){
+    updates.gender = gender ;
+  }
+  if(password){
+    if(!validator.isStrongPassword(password)){
+      throw Error('Password not strong enough !!');
+    }
+    updates.password = password ; 
+  }
+  if(country){
+    updates.country = country ;
+  }
+  if(phone){
+    updates.phone = phone
+  }
+  if(desc){
+    updates.desc = desc ;
+  }
+
+const user = await User.findByIdAndUpdate( req.userId ,{$set : updates},{new:true})
+return res.status(201).json({successfull : "Profile updated successfully ",user : user})}catch(err){
+  console.log(err.message);
+  return res.status(500).json({error:err.message});
+}
+}
+
+const serviceProviders = async (req,res) => {
+if(req.role !=="Manager"){
+  return res.status(401).json({error:"Only Manager has The access"})
+}
+    const page = req.query.p || 0;
+    const serviceProviderPerPage = 10;
+    const serviceProviders = await User.find({managerId : req.userId}).skip(page*serviceProviderPerPage).limit(serviceProviderPerPage);
+    if(serviceProviders.length === 0 ){
+      return res.status(404).json({error : "Not found !!"});
+    }
+    return res.status(201).json({serviceProviders : serviceProviders})
+}
+
 module.exports = {
   userPofile,
   createUser,
   deleteUser,
   deleteByManager,
   verifyProfile,
+  updateProfile,
+
 };

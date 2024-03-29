@@ -1,7 +1,7 @@
 const express = require('express');
 const verifyToken = require('../middleware/JWT')
 const router = express.Router()
-const {verifyProfile,userPofile,createUser,deleteUser,deleteByManager} = require('../controllers/UserController')
+const {verifyProfile,userPofile,createUser,deleteUser,deleteByManager,updateProfile} = require('../controllers/UserController')
 const multer = require("multer");
 const path = require("path");
 
@@ -98,7 +98,7 @@ router.get('/profile',verifyToken,userPofile);
  *       '500':
  *         description: Internal server error
  */
-router.post('/createUser',upload.single('img'),verifyToken,createUser);
+router.post('/createUser',verifyToken,upload.single('img'),createUser);
 /**
  * @swagger
  * /api/users/delete/{id}:
@@ -146,7 +146,8 @@ router.delete('/delete/:id',verifyToken,deleteUser);
  *       '500':
  *         description: Internal server error
  */
-router.delete('/deleteByManager/:id',deleteByManager);
+router.delete('/deleteByManager/:id',verifyToken,deleteByManager);
+router.post('/updatePofile',verifyToken,upload.single('img'),updateProfile)
 
 
 module.exports = router
