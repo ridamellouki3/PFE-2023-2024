@@ -82,9 +82,6 @@ const confirm = async (req, res) => {
         return res.status(401).json({error:"You can Confirm only Your Orders."});
       }
       await order.updateOne({ $set: { isConfirmed: true } });
-      const service = await Service.findByIdAndUpdate(order.serviceId, {
-        $inc: { sales: 1 },
-      });
 
       return res.status(200).json({success:"Order is confirmed."});
     } else {
@@ -110,6 +107,9 @@ const completeOrder = async (req, res) => {
           $set: { isCompleteService: true },
         }
       );
+      const service = await Service.findByIdAndUpdate(order.serviceId, {
+        $inc: { sales: 1 },
+      });
       return res.status(201).json({success:"You complete this order successfully"});
     }else{
       const order = await Order.findOne({_id : req.params.id })
@@ -119,6 +119,9 @@ const completeOrder = async (req, res) => {
         return res.status(401).json({error : "You can confim Only Orders For your Service Providers !!"});
       }else{
         order.updateOne({ $set: { isCompleteService: true }})
+        const service = await Service.findByIdAndUpdate(order.serviceId, {
+          $inc: { sales: 1 },
+        });
         return res.status(201).json({success:"You complete this order successfully"});
       }
     }
