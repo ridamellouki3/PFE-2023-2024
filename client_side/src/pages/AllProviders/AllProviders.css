@@ -6,6 +6,7 @@
   .container {
     width: 1400px;
     padding: 50px 0px;
+    margin-left: 250px ;
 
     .title {
       display: flex;
@@ -53,4 +54,9 @@
       }
     }
   }
+}
+
+
+.addNewProider{
+  margin-right: 100px ;
 }

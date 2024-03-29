@@ -24,10 +24,11 @@ const add = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+
       const formData = new FormData();
       formData.append("title", title);
       formData.append("desc", desc);
-      formData.append("categorieId", categorieId);
+      formData.append("categorie", categorieId);
       formData.append("price", price);
       formData.append("cover", cover);
       
@@ -36,6 +37,9 @@ const add = () => {
       const response = await fetch("/api/services", {
         method: "POST",
         body: formData,
+        headers:{
+          'Content-Type':'application/json'
+      }
       });
 
       const json = await response.json();

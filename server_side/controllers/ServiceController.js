@@ -5,32 +5,39 @@ const Review = require("../models/Review");
 const { isValidObjectId } = require("mongoose");
 const { ObjectId } = require("bson");
 
-const createService = async (req, res) => {
-  if (req.role !== "Service Provider" && req.role !== "Manager") {
-    return res.status(403).json({error:"Only Service Provider can create a Service!"});
-  }
-  if (!req.file) {
-    return res.status(403).json({error:"You should upload cover for your Service !!"});
-  }
-  console.log(req.file);
-  const categorie = await Categorie.findOne({ _id:new ObjectId(req.body.categorie)  });  console.log(categorie);
-  if (!categorie) {
-    return res.status(403).json({error:"There is no Categorie with this name !!!"});
-  }
-  try {
-    const newService = new Service({
-      ...req.body,
-      userId: (req.userId=='Service Provider')? req.userId : req.body.userId,
-      categorieId: categorie._id,
-      cover: req.file.filename,
-    });
-    await newService.save();
-    return res.status(201).json({success:"Service added successfully"});
-  } catch (error) {
-    console.log(error.message);
-    return res.status(500).json({error:error.message});
-  }
-};
+
+  const createService = async (req, res) => {
+    try {
+    console.log (req.userId);
+    if (req.role !== "Service Provider" && req.role !== "Manager") {
+      return res.status(403).json({error:"Only Service Provider can create a Service!"});
+    }
+    if (!req.file) {
+      return res.status(403).json({error:"You should upload cover for your Service !!"});
+    }
+    const categorie = await Categorie.findOne({ name:req.body.categorie });
+      console.log("This is : "+categorie);
+    if (!categorie) {
+      return res.status(403).json({error:"There is no Categorie with this name !!!"});
+    }
+    
+      const newService = new Service({
+        // title:req.body.title,
+        // price:req.body.price,
+        // desc:req.body.desc,
+        ...req.body,
+        userId: ((req.role =='Service Provider')? req.userId : req.body.userId),
+        categorieId: categorie._id,
+        cover: req.file.filename,
+      });
+      await newService.save();
+      return res.status(201).json({success:"Service added successfully"});
+    } catch (error) {
+      console.log(error.message);
+      return res.status(500).json({error:error.message});
+    }
+  };
+
 
 const deleteService = async (req, res) => {
   try {

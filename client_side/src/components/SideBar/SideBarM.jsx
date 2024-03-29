@@ -3,6 +3,10 @@ import './Side.css'
 import { Link,useNavigate } from "react-router-dom";
 
 function SideBarM() {
+
+  const currentUser = (localStorage.getItem("currentUser") != "undefined" ? JSON.parse(localStorage.getItem("currentUser")) : null )
+
+
   const navigate = useNavigate();
     const logout = async (e) =>{
       e.preventDefault();
@@ -24,6 +28,7 @@ function SideBarM() {
     }
 
 
+
     return (    
         
         <div className="containerr">
@@ -31,8 +36,8 @@ function SideBarM() {
           <nav>
             <ul>
               <li><Link className="aC link logoC" to="/">
-                <img src="" alt="" />
-                <span className="nav-item">WorkUp</span>
+                <img src={ currentUser.googleId ? currentUser.img :  "http://localhost:4000/" + currentUser.img } className="imguser" />
+                <span className="nav-item">Work Up</span>
                 </Link>
                 </li>
               <li> <Link className="aC link" to="/profile">

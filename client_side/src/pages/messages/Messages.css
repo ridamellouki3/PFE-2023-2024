@@ -22,7 +22,7 @@
 
     table {
       width: 100%;
-
+      margin-left: -10px;
       tr {
         height: 100px;
         th {

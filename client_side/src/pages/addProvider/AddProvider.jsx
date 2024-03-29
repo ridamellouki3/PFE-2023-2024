@@ -1,56 +1,187 @@
-import React from "react";
-import "./AddProvider.css";
-import SideBar from "../../components/SideBar/SideBar";
+import React, { useEffect, useState } from 'react'
+import './AddProvider.css'
+import SideBar from '../../components/SideBar/SideBar';
 
 const AddProvider = () => {
+
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+
+  const [gender, setGender] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+  const [img, setImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [orders, setOrders] = useState([]);
+  
+  
+  const [categories, setCategories] = useState([]);
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [categorieId, setCategory] = useState("");
+  const [price, setPrice] = useState("");
+  const [cover, setCover] = useState("");
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+
+
+  const handleImage = (e) => {
+    setCover(e.target.files[0]);
+    console.log(cover);
+
+  };
+
+
+
+
+  const handleSubmitServieProvider = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("username", username);
+      formData.append("gender", gender);
+      formData.append("email", email);
+      formData.append("img", img);
+
+      const response = await fetch("/api/users/createUser", {
+        method: "POST",
+        body: formData,
+
+      });
+
+      const json = await response.json();
+      console.log(json);
+
+      if (!response.ok) {
+        setError(json.error);
+        setSuccess(null);
+      } else {
+        setSuccess(json.success);
+        setError(null);
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        setRole("");
+        setImage(null);
+        console.log("Success")
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+       
+        const response = await fetch('/api/categories', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch');
+        }
+        const json = await response.json();
+
+        setCategories(json.success);
+
+
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  
+
+
   return (
-    <div className="add">
-         <SideBar/>
-      <div className="container">
-        <h1>Add New Gig</h1>
-        <div className="sections">
-          <div className="info">
-            <label htmlFor="">Title</label>
-            <input
-              type="text"
-              placeholder="e.g. I will do something I'm really good at"
-            />
-            <label htmlFor="">Category</label>
-            <select name="cats" id="cats">
-              <option value="design">Design</option>
-              <option value="web">Web Development</option>
-              <option value="animation">Animation</option>
-              <option value="music">Music</option>
-            </select>
-            <label htmlFor="">Cover Image</label>
-            <input type="file" />
-            <label htmlFor="">Upload Images</label>
-            <input type="file" multiple />
-            <label htmlFor="">Description</label>
-            <textarea name="" id="" placeholder="Brief descriptions to introduce your service to customers" cols="0" rows="16"></textarea>
-            <button>Create</button>
-          </div>
-          <div className="details">
-            <label htmlFor="">Service Title</label>
-            <input type="text" placeholder="e.g. One-page web design" />
-            <label htmlFor="">Short Description</label>
-            <textarea name="" id="" placeholder="Short description of your service" cols="30" rows="10"></textarea>
-            <label htmlFor="">Delivery Time (e.g. 3 days)</label>
-            <input type="number" />
-            <label htmlFor="">Revision Number</label>
-            <input type="number" />
-            <label htmlFor="">Add Features</label>
-            <input type="text" placeholder="e.g. page design" />
-            <input type="text" placeholder="e.g. file uploading" />
-            <input type="text" placeholder="e.g. setting up a domain" />
-            <input type="text" placeholder="e.g. hosting" />
-            <label htmlFor="">Price</label>
-            <input type="number" />
+    <>
+      <div className="add">
+        <SideBar/>
+
+        <div className="container">
+          <h1>Add New Service Provider</h1>
+          <div className="sections">
+            <div className="info">
+              <form onSubmit={handleSubmitServieProvider}>
+                <label htmlFor="">Name</label>
+                <input
+                  type="texhandet"
+                  placeholder="Update Your Name Here"
+                  name="Name"
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
+                />
+                <label htmlFor="">Email</label>
+                <input
+                  type="email"
+                  name="Email"
+                  value={email}
+                  placeholder="Update Your Email Here"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
+                
+                <label>Gender</label>
+
+                <div className="gender">
+                  <div className="gender1">
+                    <label>Male </label>
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="Male"
+                      onClick={(e) => {
+                        setGender(e.target.value);
+                        console.log(gender);
+                      }}
+                    />
+                  </div>
+
+                  <div className="gender2">
+                    <label>Female </label>
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="Female"
+                      onClick={(e) => {
+                        setGender(e.target.value);
+                        console.log(gender);
+                      }}
+                    />
+                  </div>
+                </div>
+                
+                <label htmlFor="">Upload Image</label>
+                <input type="file"  />
+                <img src={img} alt="" />
+                {error && <div class="bar error">{error} </div>}
+                {success && (
+                  <div class="bar success">
+                    <i class="ico">&#10004;</i> {success}
+                  </div>
+                )}
+
+                <button>Submit</button>
+              </form>
+              </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
+    </>
+  )
+}
 
-export default AddProvider ;
+export default AddProvider;

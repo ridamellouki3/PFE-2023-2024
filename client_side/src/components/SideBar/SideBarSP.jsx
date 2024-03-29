@@ -34,7 +34,7 @@ function SideBarSP() {
           <nav>
             <ul>
               <li><Link className="aC link logoC" to="/">
-                <img src={"http://localhost:4000/"+currentUser.img} alt="" />
+              <img src={ currentUser.googleId ? currentUser.img :  "http://localhost:4000/" + currentUser.img } alt="" className="imguser" />
                 <span className="nav-item">Youuuurs</span>
                 </Link>
                 </li>

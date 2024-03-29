@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@chatscope/chat-ui-kit-react": "^2.0.3",
+    "axios": "^1.6.8"
+  }
+}

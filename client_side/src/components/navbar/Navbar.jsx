@@ -72,18 +72,26 @@ function Navbar() {
       <div className="container">
         <div className="logo">
           <Link className="link" to="/">
-            <span className="text">WORK UP</span>
+            <span className="text">Youuuurs</span>
           </Link>
           <span className="dot"></span>
         </div>
         <div className="links">
-          {!currentUser?.isSeller && (
+          {currentUser?.role == "Client" ?  (
             <>
               <Link className="link" to="/telegramAPI">
                 <span>Quick Service</span>
               </Link>
             </>
-          )}
+          ):
+          (
+            <>
+            <Link className="link" to="/bootUs">
+              <span>Boot Us</span>
+            </Link>
+             </>
+          )
+          }
           {currentUser ? (
             <Link className="link" to="/profile">
               <div className="user">

@@ -72,6 +72,10 @@ function MyServices() {
         <div className="container">
         <div className="title">
           <h1>My Services</h1>
+          <Link className="addNewProider"
+            to="/add">
+              <button>Add New Service</button>
+            </Link>
           
         </div>
         <table>

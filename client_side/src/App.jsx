@@ -19,6 +19,7 @@ import Profile from "./pages/Profile/Profile";
 import Settings from "./pages/Settings/Settings";
 import TelegramAPI from "./pages/telegramAPI/telegramAPI"
 import Services from "./pages/services/Services";
+import BootUs from "./pages/bootUs/BootUs";
 
 function App() {
 
@@ -64,6 +65,10 @@ function App() {
           element: <Login />,
         },
         {
+          path: "/bootUs",
+          element: <BootUs/>,
+        },
+        {
           path: "/telegramAPI",
           element: <TelegramAPI />,
         },
@@ -106,10 +111,7 @@ function App() {
       path: "/profile",
       element: <Profile/>,
     },
-    {
-      path: "/settings",
-      element: <Settings/>,
-    },
+   
   ]);
 
   return <RouterProvider router={router} />;

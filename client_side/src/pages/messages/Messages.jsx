@@ -66,14 +66,18 @@ const Messages = () => {
                   <tr>
                     <th>{currentUser.role != "Client" ? "Buyer" : "Seller"}</th>
                     <th>Date</th>
+                    <th>Last Msg</th>
                     <th>Action</th>
                   </tr>
                   {conversations.map((conver)=>(
                    
                   <tr className="active" key={conver._id}>
-                    <td>{currentUser.role != "CntIdlient" ? conver.serviceProviderId.username : clientId}</td>
+                    <td>{currentUser.role == "Client" ? conver.serviceProviderId.username : conver.clientId.username}</td>
                    
                     <td>{(conver.updatedAt)}</td>
+
+                    <td>{(conver.lastMessage)}</td>
+
                     <td>
                       <Link to={`/message/${conver._id}`}>
                         <button>See More</button>

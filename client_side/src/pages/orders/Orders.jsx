@@ -1,5 +1,6 @@
+
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import "./Orders.css";
 import SideBar from "../../components/SideBar/SideBar";
 
@@ -10,6 +11,9 @@ const Orders = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [orders, setOrders] = useState([]);
+  const [newConv , setNewConv] = useState("")
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,6 +22,8 @@ const Orders = () => {
 
       try {
         const response = await fetch('/api/orders')
+
+
         if (!response.ok) {
           throw new Error(`API request failed with status ${response.status}`);
         }
@@ -36,6 +42,35 @@ const Orders = () => {
     fetchData();
   }, []);
 
+
+  const handelclick =async () =>{
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+     const response = await fetch("/api/conversations", {
+      method: "POST",
+      body:"65f5abed7f1e0f919cd4e518",
+      headers:{
+        'Content-Type':'application/json'
+    }
+    });
+
+
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+    
+
+    } catch (err) {
+      setError(err.message);
+      console.log(err)
+    } finally {
+      setIsLoading(false);
+    }
+  }
  
   return (
     <div className="orders">
@@ -43,7 +78,7 @@ const Orders = () => {
        { isLoading ?  "Loading" : error ? "Error " : 
        orders.length == 0 ? (
         <div className="container">
-              
+
               <div className="title">
                 <h1>No Orders Yet </h1>
               </div>
@@ -54,7 +89,8 @@ const Orders = () => {
 
 
             <div className="container">
-                 
+               { console.log(orders)}
+
         <div className="title">
           <h1>Orders</h1>
         </div>
@@ -79,7 +115,9 @@ const Orders = () => {
               <td>{order.title}</td>
               <td>{order.price}.<sup>99</sup></td>
               <td>
-                <img className="message" src="./img/message.png" alt="" />
+                <img className="message" src="./img/message.png" onClick={()=>{
+                  (currentUser.role == "Service Provider") ? setNewConv(order.clientId._id): setNewConv(order.serviceProviderId)
+                }} />
               </td>
             </tr>
              ))}
