@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "./Add.css";
+import "./addService.css";
+
 import SideBar from "../../components/SideBar/SideBar";
 
-const add = () => {
+const addService = () => {
+
 
   const [categories, setCategories] = useState([]);
   const [title, setTitle] = useState("");
@@ -11,7 +13,15 @@ const add = () => {
   const [price, setPrice] = useState("");
   const [cover, setCover] = useState("");
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [success, setSuccess] = useState("");
+
+
+
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const [isLoading, setIsLoading] = useState(false);
+  const [providers, setProviders] = useState([]);
+  const [services, setServices] = useState([]);
+  const [providerName , setProviderName] = useState("");
 
 
   const handleImage = (e) => {
@@ -19,6 +29,34 @@ const add = () => {
     console.log(cover);
 
   };
+
+
+  const fetchDataProvider = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const response = await fetch("/api/users/service-Providers")
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        setProviders(responseData.serviceProviders);
+        console.log(providers)
+
+      } catch (err) {
+        setError(err.message);
+        console.log(err)
+      } finally {
+        setIsLoading(false);
+      }
+  }; 
+
+
+  useEffect(()=>{
+    fetchDataProvider()
+  },[])
 
 
   const handleSubmit = async (e) => {
@@ -31,6 +69,8 @@ const add = () => {
       formData.append("categorie", categorieId);
       formData.append("price", price);
       formData.append("cover", cover);
+      formData.append("userId", providerName);
+      
       
       console.log(categorieId)
 
@@ -40,22 +80,22 @@ const add = () => {
       });
 
       const json = await response.json();
+      console.log("Result")
+      setSuccess(json.success)
       console.log(json);
 
       if (!response.ok) {
         setError(json.error);
-        setSuccess(null);
+        setSuccess("Error");
       }
     } catch (error) {
       console.log(error.message);
     }
 
-  };
+};
 
 
-useEffect(()=>{
- console.log(categorieId)
-},[])
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,6 +126,8 @@ useEffect(()=>{
   return (
     <div className="add">
          <SideBar/>
+     {isLoading ? "Loading.." : error ? "Errrooorr" :
+     (
       <div className="container">
         
         <h1>Add New Service</h1>
@@ -109,6 +151,17 @@ useEffect(()=>{
                  <option key={cat._id} value={cat.name}>{cat.name}</option>
                   ))}
            </select>
+
+           <label htmlFor="">Service Provider Name</label>
+            
+           
+            <select name="providerName" id="providerName" onChange={(e) => setProviderName(e.target.value)}>
+                 <option value="">-- Select a Provider --</option>
+                 {providers.map((cat) => (
+                 <option key={cat._id} value={cat._id}>{cat.username}</option>
+                  ))}
+           </select>
+
             
             <label htmlFor="">Cover Image</label>
             <input type="file" onChange={handleImage} />
@@ -131,14 +184,15 @@ useEffect(()=>{
                     <i class="ico">&#10004;</i> {success}
                   </div>
                 )}
-            <button>Create</button>
+            <button>Add Service</button>
           </form>
           </div>
          
         </div>
-      </div>
+      </div>)}
     </div>
   );
 };
 
-export default add;
+export default addService;
+

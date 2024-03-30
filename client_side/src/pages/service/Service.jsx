@@ -14,6 +14,7 @@ function Service() {
   const date = new Date().toISOString();
   const [success, setSuccess] = useState(null);
 
+  const currentUser = (localStorage.getItem("currentUser") != "undefined" ? JSON.parse(localStorage.getItem("currentUser")) : null )
   
   
 
@@ -101,16 +102,16 @@ function Service() {
             />
             
           </Slider>
+          { currentUser?.role == "Client" ?
           <form onSubmit={createOrder}>
-          <button type="submit">Order now </button>
-
-
-          </form>
-          {success && (
+          <button type="submit" className="orderService">Order now </button>
+          </form> : ""}
+                {success && (
                   <div className="bar success">
                     <i className="ico">&#10004;</i> {success}
                   </div>
-                )}
+                )}        
+          
           <h2>About This Service</h2>
           <p>
            {service.desc}
@@ -153,7 +154,7 @@ function Service() {
                     )}
                    
                   </div>
-                  <hr />
+                            <hr />
              </div>
          
           <Reviews serviceId={id}/>

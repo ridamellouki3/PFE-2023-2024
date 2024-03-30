@@ -58,15 +58,15 @@ const Orders = () => {
         'Content-Type':'application/json'
       }
     });
-    const res = response.json();
-      console.log(res)
-      
     
+      
 
       if (!response.ok) {
         throw new Error(`API request failed with status ${response.status}`);
       }
+      const res = response.json();
 
+      console.log(res.success)
 
     } catch (err) {
       setError(err.message);

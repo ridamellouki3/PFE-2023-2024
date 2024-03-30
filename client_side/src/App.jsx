@@ -16,10 +16,12 @@ import AllProviders from "./pages/AllProviders/AllProviders";
 import SideBar from "./components/SideBar/SideBar";
 import AddProvider from "./pages/addProvider/AddProvider";
 import Profile from "./pages/Profile/Profile";
-import Settings from "./pages/Settings/Settings";
 import TelegramAPI from "./pages/telegramAPI/telegramAPI"
 import Services from "./pages/services/Services";
 import BootUs from "./pages/bootUs/BootUs";
+import AboutUs from "./pages/aboutUs/AboutUs";
+import AddService from "./pages/addForProvider/addService"
+import AllServices from "./pages/allServices/AllServices";
 
 function App() {
 
@@ -68,6 +70,11 @@ function App() {
           path: "/bootUs",
           element: <BootUs/>,
         },
+      
+        {
+          path: "/aboutUs",
+          element: <AboutUs/>,
+        },
         {
           path: "/telegramAPI",
           element: <TelegramAPI />,
@@ -84,8 +91,16 @@ function App() {
       element: <MyServices />,
     },
     {
+      path: "/addService",
+      element: <AddService/>,
+    },
+    {
       path: "/orders",
       element: <Orders />,
+    },
+    {
+      path: "/allServices",
+      element: <AllServices />,
     },
     {
       path: "/messages",

@@ -1,11 +1,11 @@
 import React from 'react'
 
-function BootUs() {
+function AboutUs() {
   return (
     <div>
-      
+      hhhhh
     </div>
   )
 }
 
-export default BootUs
+export default AboutUs

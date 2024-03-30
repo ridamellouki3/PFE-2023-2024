@@ -5,6 +5,7 @@ const {
   getService,
   filterServices,
   ServicesByCategorie,
+  getallServices,
   getMyServices
 } = require("../controllers/ServiceController");
 const verifyToken = require("../middleware/JWT");
@@ -192,7 +193,7 @@ router.get("/My-Services/",verifyToken,getMyServices);
 router.get("/ServicesByCategorie/:id",ServicesByCategorie);
 router.get("/single/:id", getService);
 router.get("/", filterServices);
-
+router.get("/All-Services",getallServices);
 
 
 module.exports = router;

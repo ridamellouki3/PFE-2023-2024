@@ -4,6 +4,7 @@ const Order = require("../models/order");
 const Review = require("../models/Review");
 const Service = require("../models/Service");
 const Token = require("../models/Token");
+const bcrypt = require("bcrypt")
 
 const userPofile = async (req, res) => {
   try {
@@ -19,7 +20,7 @@ const createUser = async (req, res) => {
   if (req.role !== "Manager") {
     return res.status(404).json("Only Managers can create A User ");
   }
-
+  console.log(req.body)
   try {
     if (!validator.isEmail(req.body.email)) {
       throw Error("This is not a valid Email!");
@@ -33,7 +34,7 @@ const createUser = async (req, res) => {
     }
 
     const salt = await bcrypt.genSalt(10);
-    const hashedpass = await bcrypt.hash(password, salt);
+    const hashedpass = await bcrypt.hash(req.body.password, salt);
     const user = await User.create({
       ...req.body,
       password: hashedpass,
@@ -125,6 +126,7 @@ const deleteByManager = async (req, res) => {
       await Review.deleteMany({ serviceId: user._id });
       service.deleteOne();
     });
+    await user.deleteOne();
     return res.status(201).json("User deleted successfully");
   } catch (error) {
     console.error(error.message);
@@ -226,5 +228,5 @@ module.exports = {
   deleteByManager,
   verifyProfile,
   updateProfile,
-
+  serviceProviders,
 };

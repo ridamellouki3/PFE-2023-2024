@@ -84,13 +84,22 @@ function Navbar() {
               </Link>
             </>
           ):
+          currentUser?.role == "Service Provider" || currentUser?.role == "Manager"?
           (
             <>
             <Link className="link" to="/bootUs">
               <span>Boot Us</span>
             </Link>
              </>
+          ):
+          (
+            <>
+             <Link className="link" to="/aboutUs">
+              <span>About Us </span>
+            </Link>
+            </>
           )
+         
           }
           {currentUser ? (
             <Link className="link" to="/profile">

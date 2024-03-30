@@ -24,15 +24,14 @@ const AddProvider = () => {
   const [price, setPrice] = useState("");
   const [cover, setCover] = useState("");
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
-
+  const [success, setSuccess] = useState("");
+ 
 
   const handleImage = (e) => {
-    setCover(e.target.files[0]);
-    console.log(cover);
+    setImage(e.target.files[0]);
+    console.log(img);
 
   };
-
 
 
 
@@ -44,6 +43,8 @@ const AddProvider = () => {
       formData.append("gender", gender);
       formData.append("email", email);
       formData.append("img", img);
+      formData.append("password", password);
+
 
       const response = await fetch("/api/users/createUser", {
         method: "POST",
@@ -53,12 +54,13 @@ const AddProvider = () => {
 
       const json = await response.json();
       console.log(json);
+      setSuccess(json)
 
       if (!response.ok) {
         setError(json.error);
-        setSuccess(null);
+        setSuccess("");
       } else {
-        setSuccess(json.success);
+        setSuccess(json);
         setError(null);
         setUsername("");
         setEmail("");
@@ -116,7 +118,7 @@ const AddProvider = () => {
                 <label htmlFor="">Name</label>
                 <input
                   type="texhandet"
-                  placeholder="Update Your Name Here"
+                  placeholder="Provider Name Here"
                   name="Name"
                   value={username}
                   onChange={(e) => {
@@ -128,12 +130,21 @@ const AddProvider = () => {
                   type="email"
                   name="Email"
                   value={email}
-                  placeholder="Update Your Email Here"
+                  placeholder="Provider Email"
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
                 />
-                
+                <label htmlFor="">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={password}
+                  placeholder="Provider Password"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
                 <label>Gender</label>
 
                 <div className="gender">
@@ -165,12 +176,13 @@ const AddProvider = () => {
                 </div>
                 
                 <label htmlFor="">Upload Image</label>
-                <input type="file"  />
-                <img src={img} alt="" />
-                {error && <div class="bar error">{error} </div>}
+                <input type="file" 
+                 onChange={handleImage}
+                />
+                {error && <div className="bar error">{error} </div>}
                 {success && (
-                  <div class="bar success">
-                    <i class="ico">&#10004;</i> {success}
+                  <div className="bar success">
+                    <i className="ico">&#10004;</i> {success}
                   </div>
                 )}
 

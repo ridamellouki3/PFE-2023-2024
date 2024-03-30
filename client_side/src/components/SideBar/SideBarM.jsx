@@ -37,7 +37,7 @@ function SideBarM() {
             <ul>
               <li><Link className="aC link logoC" to="/">
                 <img src={ currentUser.googleId ? currentUser.img :  "http://localhost:4000/" + currentUser.img } className="imguser" />
-                <span className="nav-item">Work Up</span>
+                <span className="nav-item">Youuuurs</span>
                 </Link>
                 </li>
               <li> <Link className="aC link" to="/profile">

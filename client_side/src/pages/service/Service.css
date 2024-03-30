@@ -288,7 +288,7 @@
       }
 
       button{
-        background-color: #1dbf73;
+        background-color:   #2794b0; 
         padding: 10px;
         color: white;
         font-weight: 500;
@@ -305,6 +305,20 @@
   color: #2794b0;  
 }
 
+.orderService{
+  width: 30%;
+  height: 30px ;
+  border-radius: 10%; 
+  margin: 1px auto;
+  background-color:#50c0dc;
+  font-weight: 500;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0px auto;
+}
 .desc{
   padding-left: 10px ;
 }

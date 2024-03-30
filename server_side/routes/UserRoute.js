@@ -1,7 +1,7 @@
 const express = require('express');
 const verifyToken = require('../middleware/JWT')
 const router = express.Router()
-const {verifyProfile,userPofile,createUser,deleteUser,deleteByManager,updateProfile} = require('../controllers/UserController')
+const {verifyProfile,userPofile,createUser,deleteUser,serviceProviders,deleteByManager,updateProfile} = require('../controllers/UserController')
 const multer = require("multer");
 const path = require("path");
 
@@ -148,6 +148,6 @@ router.delete('/delete/:id',verifyToken,deleteUser);
  */
 router.delete('/deleteByManager/:id',verifyToken,deleteByManager);
 router.patch('/updatePofile',verifyToken,upload.single('img'),updateProfile)
-
+router.get("/service-Providers",verifyToken,serviceProviders)
 
 module.exports = router

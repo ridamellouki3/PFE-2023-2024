@@ -74,6 +74,20 @@ const getService = async (req, res) => {
   }
 };
 
+const getallServices = async(req,res)=>{
+  try{
+    const services = await Service.find().populate({
+      path: "userId",
+      select: "username email gender googleId img country verified"
+    });
+    return res.status(201).json({services : services});  
+  }catch(err){
+    console.log(err.message);
+    return res.status(501).json({error:err.message})
+  }
+  
+}
+
 //This is FOR A USER IF HE want TO SEARCH for A SERVICE
 
 const filterServices = async (req, res) => {
@@ -180,7 +194,7 @@ const getMyServices = async (req, res) => {
       if(services.length ===0){
         return res.status(401).json({error:"No services yet"})
       }
-      return res.status(200).json({ success : services});
+      return res.status(200).json({ services : services});
       }
       
       
@@ -198,5 +212,6 @@ module.exports = {
   getService,
   filterServices,
   ServicesByCategorie,
-  getMyServices
+  getMyServices,
+  getallServices,
 };

@@ -5,11 +5,12 @@ import { Link } from 'react-router-dom';
 const ServiceCard =  ({ item }) => {
   return (
     <Link to={`/services/single/${item._id}`} className="link">
-      <div className="gigCard">
+{      console.log(item)
+}      <div className="gigCard">
         <img src={"http://localhost:4000/" + item.cover} alt="" />
         <div className="info">
           <div className="user">
-            <img   src={ item.userId.googleId ? item.userId.img :  "http://localhost:4000/" + item.userId.img }
+            <img   src={ "http://localhost:4000/" + item.userId.img }
                        alt="" />
             <span>{item.userId.username}</span>
           </div>
