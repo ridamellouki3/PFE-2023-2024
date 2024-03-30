@@ -22,7 +22,8 @@ function MyServices() {
         }
 
         const responseData = await response.json();
-        setServices(responseData);
+        console.log(responseData)
+        setServices(responseData.services);
         console.log(services)
 
       } catch (err) {
@@ -53,6 +54,7 @@ function MyServices() {
 
       if (!response.ok) {
         setError(json.error);
+        console.log(error)
       }else{
         fetchData()
       } 

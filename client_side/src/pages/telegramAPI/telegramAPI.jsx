@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./telegramAPI.css"
 const telegramAPI = () => {
+  const [success , setSuccess] = useState("")
+
+  const handelSubmit = () =>{
+    setSuccess("Thanks You for Trusting Us We will call you SOON!")
+  }
+  
+
   return (
     <>
       <div className="add">
@@ -8,6 +15,7 @@ const telegramAPI = () => {
         <h1>QUICK SERVICE</h1>
         <div className="sections">
           <div className="info">
+            <form onSubmit={handelSubmit} >
             <label htmlFor="">Your Adress</label>
             <input
               type="text"
@@ -18,17 +26,19 @@ const telegramAPI = () => {
               type="number"
               placeholder="Type Your Phone Number Here"
             />
-            <label htmlFor="">Choose A service </label>
-            <select name="cats" id="cats">
-              <option value="design">Client</option>
-              <option value="web">Servicer Provider</option>
-              <option value="animation">Manager</option>
-            </select>
+           
             
             <label htmlFor="">Description</label>
             <textarea name="" id="" placeholder="Brief descriptions to introduce your problem" cols="0" rows="16"></textarea>
+            {success && (
+                  <div class="bar success">
+                    <i class="ico">&#10004;</i> {success}
+                  </div>
+                )}
             <button>Send</button>
+            </form>
           </div>
+          
         </div>
       </div>
     </div>

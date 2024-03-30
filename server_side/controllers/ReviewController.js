@@ -40,7 +40,7 @@ const getReviews = async (req, res) => {
   try {
     const reviews = await Review.find({ serviceId: req.params.serviceId }).populate({
       path:'userId',
-      select:'username img createdAt',
+      select:'username img country createdAt',
     });
     return res.status(200).send({reviews:reviews});
   } catch (error) {
@@ -48,7 +48,6 @@ const getReviews = async (req, res) => {
     return res.status(500).json({error:error.message});
   }
 };
-
 const deleteReview = async (req, res) => {
   try {
     const review = await Review.findById(req.params.id);

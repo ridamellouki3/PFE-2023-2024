@@ -37,9 +37,6 @@ const add = () => {
       const response = await fetch("/api/services", {
         method: "POST",
         body: formData,
-        headers:{
-          'Content-Type':'application/json'
-      }
       });
 
       const json = await response.json();
@@ -108,7 +105,7 @@ useEffect(()=>{
             <select name="cats" id="cats" onChange={(e) => setCategory(e.target.value)}>
                  <option value="">-- Select a Category --</option>
                  {categories.map((cat) => (
-                 <option key={cat._id} value={cat._id}>{cat.name}</option>
+                 <option key={cat._id} value={cat.name}>{cat.name}</option>
                   ))}
            </select>
             

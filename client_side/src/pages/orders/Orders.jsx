@@ -11,7 +11,6 @@ const Orders = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [orders, setOrders] = useState([]);
-  const [newConv , setNewConv] = useState("")
   const navigate = useNavigate()
 
 
@@ -43,36 +42,102 @@ const Orders = () => {
   }, []);
 
 
-  const handelclick =async () =>{
 
+
+
+  const setNewConv = async (id) => {
+    console.log(id)
     setIsLoading(true);
     setError(null);
 
     try {
-     const response = await fetch("/api/conversations", {
+      const response = await fetch("/api/conversations", {
       method: "POST",
-      body:"65f5abed7f1e0f919cd4e518",
+      body: JSON.stringify({ to : id }),
       headers:{
         'Content-Type':'application/json'
-    }
+      }
     });
-
+    const res = response.json();
+      console.log(res)
+      
+    
 
       if (!response.ok) {
         throw new Error(`API request failed with status ${response.status}`);
       }
 
-    
 
     } catch (err) {
       setError(err.message);
       console.log(err)
     } finally {
       setIsLoading(false);
-    }
+  }
+
+  
+  }
+
+  const complete = async (e, id) =>{
+    e.preventDefault()
+    console.log("complete " + id)
+    setIsLoading(true);
+    setError(null);
+
+    try {
+
+      const response = await fetch(`/api/orders/compelete-order/${id}`, {
+      method: "PATCH"
+    });
+    
+    const res = response.json();
+    console.log(res)
+      
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+
+    } catch (err) {
+      setError(err.message);
+      console.log(err)
+    } finally {
+      setIsLoading(false);
+  }
+
+  
+  }
+
+  
+  const confirme = async (e,id) =>{
+    e.preventDefault()
+    console.log("confirm  " + id)
+    setIsLoading(true);
+    setError(null);
+
+    try {
+
+      const response = await fetch(`/api/orders/${id}`, {
+      method: "PATCH"
+    });
+    
+    const res = response.json();
+    console.log(res)
+      
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+
+    } catch (err) {
+      setError(err.message);
+      console.log(err)
+    } finally {
+      setIsLoading(false);
+  }
   }
  
-  return (
+return (
     <div className="orders">
       <SideBar/>
        { isLoading ?  "Loading" : error ? "Error " : 
@@ -100,6 +165,8 @@ const Orders = () => {
               <th>Image</th>
               <th>Title</th>
               <th>Price</th>
+              <th>is Confirmed</th>
+              <th>Status</th>
               <th>Contact</th>
             </tr>
             {
@@ -108,15 +175,26 @@ const Orders = () => {
               <td>
                 <img
                   className="image"
-                  src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                  src={  "http://localhost:4000/" + order.img }
                   alt=""
                 />
               </td>
               <td>{order.title}</td>
               <td>{order.price}.<sup>99</sup></td>
-              <td>
+             
+              <td>{currentUser.role == "Client" ? order.isConfirmed == true ? "Confirmed" : "Not Confirmed" :
+              order.isConfirmed != true ? ( <button onClick={(e)=>confirme(e,order._id)}> Confirme Now </button>)
+              : ( <span> Confirmed </span> )   
+              }</td>
+
+              <td>{currentUser.role == "Client" ? order.isCompleteService == true ? "Completed" : "Not Completed" :
+              order.isCompleteService != true ? ( <button onClick={(e)=>complete(e,order._id)}> Complete Now </button>)
+              : ( <span> Commpleted </span> )   
+              }</td>
+
+               <td>
                 <img className="message" src="./img/message.png" onClick={()=>{
-                  (currentUser.role == "Service Provider") ? setNewConv(order.clientId._id): setNewConv(order.serviceProviderId)
+                  (currentUser.role == "Service Provider") ? setNewConv(order.clientId._id) : setNewConv(order.serviceProviderId._id)
                 }} />
               </td>
             </tr>

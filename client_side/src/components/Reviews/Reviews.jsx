@@ -88,7 +88,8 @@ const Reviews = ({serviceId})=> {
   <>
    
     {reviews.length > 0 && (
-      <div>
+      <div>     { console.log(reviews)}
+
         <h2>Reviews</h2>
         {reviews.map((review) => (
           <Review key={review._id} review={review} /> 

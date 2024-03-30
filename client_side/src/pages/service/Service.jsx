@@ -11,6 +11,12 @@ function Service() {
   const [error, setError] = useState(null);
   const [service, setService] = useState(null);
 
+  const date = new Date().toISOString();
+  const [success, setSuccess] = useState(null);
+
+  
+  
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -35,6 +41,32 @@ function Service() {
     fetchData();
   }, [id]);
 
+
+
+  const createOrder = async (e) => {
+    e.preventDefault()
+   console.log("HHEhEH")
+    try {
+      const response = await fetch(`/api/orders/create-payment/${id}`,{
+        method : "POST",
+        headers:{
+          'Content-Type':'application/json'
+      }
+      });
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      setSuccess(responseData.clientSecret);
+      console.log(success)
+    } catch (err) {
+      setError(err.message);
+      console.log(err)
+    } 
+  };
+
+
    
   return (
 
@@ -49,7 +81,7 @@ function Service() {
           <div className="user">
             <img
               className="pp"
-              src={service.userId.img ? service.userId.img :  "http://localhost:4000/" + service.userId.img }
+              src={"http://localhost:4000/" + service.userId.img }
               alt=""
             />
             <span>{service.userId.username}</span>
@@ -64,33 +96,24 @@ function Service() {
           </div>
           <Slider slidesToShow={1} arrowsScroll={1} className="slider">
             <img
-              src="https://images.pexels.com/photos/1074535/pexels-photo-1074535.jpeg?auto=compress&cs=tinysrgb&w=1600"
+              src= { "http://localhost:4000/" + service.cover }
               alt=""
             />
-            <img
-              src="https://images.pexels.com/photos/1462935/pexels-photo-1462935.jpeg?auto=compress&cs=tinysrgb&w=1600"
-              alt=""
-            />
-            <img
-              src="https://images.pexels.com/photos/1054777/pexels-photo-1054777.jpeg?auto=compress&cs=tinysrgb&w=1600"
-              alt=""
-            />
+            
           </Slider>
+          <form onSubmit={createOrder}>
+          <button type="submit">Order now </button>
+
+
+          </form>
+          {success && (
+                  <div className="bar success">
+                    <i className="ico">&#10004;</i> {success}
+                  </div>
+                )}
           <h2>About This Service</h2>
           <p>
-            I use an AI program to create images based on text prompts. This
-            means I can help you to create a vision you have through a textual
-            description of your scene without requiring any reference images.
-            Some things I've found it often excels at are: Character portraits
-            (E.g. a picture to go with your DnD character) Landscapes (E.g.
-            wallpapers, illustrations to compliment a story) Logos (E.g. Esports
-            team, business, profile picture) You can be as vague or as
-            descriptive as you want. Being more vague will allow the AI to be
-            more creative which can sometimes result in some amazing images. You
-            can also be incredibly precise if you have a clear image of what you
-            want in mind. All of the images I create are original and will be
-            found nowhere else. If you have any questions you're more than
-            welcome to send me a message.
+           {service.desc}
           </p>
           <div className="box">
                   <div className="items">
@@ -104,11 +127,12 @@ function Service() {
                       )
                     }
                     </div>
-                    <div className="item">
+                    {(service.userId.country) && (
+                      <div className="item">
                       <span className="title">From  :</span>
                       <span className="desc">{service.userId.country}</span>
                     </div>
-
+                       )}
                     <div className="item">
                       <span className="title">Member since :</span>
                       <span className="desc">Aug 2022</span>
@@ -121,10 +145,12 @@ function Service() {
                       <span className="title">Email :</span>
                       <span className="desc">{service.userId.email}</span>
                     </div>
-                    <div className="item">
-                      <span className="title">Languages :</span>
-                      <span className="desc">English </span>
+                    {(service.userId.phone) && (
+                      <div className="item">
+                      <span className="title">Phone :</span>
+                      <span className="desc">{service.userId.phone} </span>
                     </div>
+                    )}
                    
                   </div>
                   <hr />

@@ -65,9 +65,10 @@ function Services() {
         </div>
         <div className="cards">
           { isLoading ? "Loading" : error ? "Somethings Wrong" : 
-          services.map((card) => (
+         (services.length == 0 ? "NO SERVICE IN THIS CATEGORY YET": services.map((card) => (
             <ServiceCard key={card._id} item={card} />
-          ))}
+          )))
+          }
         </div>
       </div>
     </div>

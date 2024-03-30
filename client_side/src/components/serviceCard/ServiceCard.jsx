@@ -6,22 +6,25 @@ const ServiceCard =  ({ item }) => {
   return (
     <Link to={`/services/single/${item._id}`} className="link">
       <div className="gigCard">
-        <img src={"http://localhost:4000/" + "cover-1709022667597-639855455.jpg"} alt="" />
+        <img src={"http://localhost:4000/" + item.cover} alt="" />
         <div className="info">
           <div className="user">
-            <img src="/img/heart.png"  alt="" />
+            <img   src={ item.userId.googleId ? item.userId.img :  "http://localhost:4000/" + item.userId.img }
+                       alt="" />
             <span>{item.userId.username}</span>
           </div>
+          {console.log(item)}
           <p>{item.desc}</p>
           <div className="star">
-            <img src="./img/star.png" alt="" />
-            <span> {!isNaN(item.totalStars / item.starNumber) &&
-                Math.round(item.totalStars / item.starNumber)}</span>
+            <span>{item.starNumber}</span>
+            <span>  {Array(item.starNumber).fill().map((_, i) => (
+           <img src="/img/star.png" alt="" key={i} />
+              ))}</span>
           </div>
         </div>
         <hr />
         <div className="detail">
-          <img src="./img/heart.png" alt="" />
+          <img src="/img/coin.png" alt="" />
           <div className="price">
             <span>STARTING AT</span>
             <h2>

@@ -9,15 +9,23 @@ const Profile = () => {
 
   const [gender, setGender] = useState("");
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
+  const [desc, setDesc] = useState("");
+  const [country, setCountry] = useState("");
+  const [phone, setPhone] = useState("");
+  const [resp , setResp] = useState("");
   const [img, setImage] = useState(null);
   const [success, setSuccess] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [orders, setOrders] = useState([]);
 
+
+  const handleImage = (e) => {
+    setImage(e.target.files[0]);
+    console.log(img);
+
+  };
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,19 +33,21 @@ const Profile = () => {
       const formData = new FormData();
       formData.append("username", username);
       formData.append("gender", gender);
-      formData.append("email", email);
-      formData.append("password", password);
-      formData.append("role", role);
+      formData.append("pass", password);
+      formData.append("desc", desc);
+      formData.append("country", country);
+      formData.append("phone", phone);
       formData.append("img", img);
 
-      const response = await fetch("/api/auth/registre", {
-        method: "POST",
+      const response = await fetch("/api/users/updatePofile", {
+        method: "PATCH",
         body: formData,
 
       });
 
       const json = await response.json();
-      console.log(json);
+      setResp(json.successfull)
+      console.log(json.user);
 
       if (!response.ok) {
         setError(json.error);
@@ -46,10 +56,11 @@ const Profile = () => {
         setSuccess(json.success);
         setError(null);
         setUsername("");
-        setEmail("");
         setPassword("");
-        setRole("");
         setImage(null);
+        setDesc("");
+        setPhone("");
+        setCountry("");
       }
     } catch (error) {
       console.log(error.message);
@@ -68,26 +79,17 @@ const Profile = () => {
           <div className="sections">
             <div className="info">
               <form onSubmit={handleSubmit}>
-                <label htmlFor="">Name</label>
+                <label htmlFor="">User Name</label>
                 <input
                   type="texhandet"
-                  placeholder="Update Your Name Here"
-                  name="Name"
+                  placeholder="Update Your UserName Here"
+                  name="username"
                   value={username}
                   onChange={(e) => {
                     setUsername(e.target.value);
                   }}
                 />
-                <label htmlFor="">Email</label>
-                <input
-                  type="email"
-                  name="Email"
-                  value={email}
-                  placeholder="Update Your Email Here"
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                />
+                
                 <label htmlFor="">Password</label>
                 <input
                   type="password"
@@ -98,6 +100,30 @@ const Profile = () => {
                     setPassword(e.target.value);
                   }}
                 />
+
+                <label htmlFor="">Country</label>
+                <input
+                  type="password"
+                  name="country"
+                  value={country}
+                  placeholder='Update Your Country'
+                  onChange={(e) => {
+                    setCountry(e.target.value);
+                  }}
+                />
+
+                <label htmlFor="">Phone Number</label>
+                <input
+                  type="text"
+                  name="phone"
+                  value={phone}
+                  placeholder='Update Your Phone'
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                  }}
+                />
+
+                
                 <label>Gender</label>
 
                 <div className="gender">
@@ -127,30 +153,27 @@ const Profile = () => {
                     />
                   </div>
                 </div>
-                <label htmlFor="">Role</label>
-                <select
-                  name="cats"
-                  id="cats"
-                  onClick={(e) => {
-                    setRole(e.target.value);
-                    console.log(e.target.value);
+                <label htmlFor="">Description</label>
+                <textarea
+                
+                  type="desc"
+                  name="Password"
+                  value={desc}
+                  placeholder='Describe your self'
+                  onChange={(e) => {
+                    setDesc(e.target.value);
                   }}
-                  required
-                >
-                  <option></option>
-                  <option value="Client">Client</option>
-                  <option value="Service Provider">Service Provider</option>
-                  <option value="Manager">Manager</option>
-                </select>
+                />
+                
                 <label htmlFor="">Upload Image</label>
-                <input type="file"  />
-                <img src={img} alt="" />
+                <input type="file"  onChange={handleImage} />
                 {error && <div class="bar error">{error} </div>}
-                {success && (
+                {resp && (
                   <div class="bar success">
-                    <i class="ico">&#10004;</i> {success}
+                    <i class="ico">&#10004;</i> {resp}
                   </div>
                 )}
+                
                 <button>Update</button>
               </form>
 
