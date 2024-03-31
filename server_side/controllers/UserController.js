@@ -41,6 +41,7 @@ const createUser = async (req, res) => {
       img: req.file.filename,
       role: "Service Provider",
       managerId: req.userId,
+      verified: true, 
     });
     return res
       .status(201)
@@ -52,23 +53,22 @@ const createUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  if (req.userId !== req.params.id) {
-    return res.status(501).json("YOU CAN DELETE ONLY YOUR ACCOUNT");
-  }
+
   if (req.role === "Client") {
     try {
       const user = await User.findByIdAndDelete(req.userId);
       if (!user) {
-        return res.status(405).json("User Not Found");
+        return res.status(405).json({error:"User Not Found"});
       }
-      return res.status(201).json("User has been deleted successfully");
+      return res.status(201).json({success:"User has been deleted successfully"});
     } catch (error) {
       console.error(error.message);
-      return res.status();
+      return res.status(501).json({error: error.message});
     }
   } else if (req.role === "Service Provider") {
     try {
-      const user = await User.findByIdAndDelete(req.userId);
+      const user = await User.findById(req.userId)
+      console.log(user);
       if (user) {
         const services = (await Service.find({ userId: req.userId })).forEach(
           async (service) => {
@@ -77,17 +77,18 @@ const deleteUser = async (req, res) => {
             await service.deleteOne();
           }
         );
-        return req.status(200).json("User has been deleted successfully");
+        await user.deleteOne();
+        return res.status(200).json({success:"User has been deleted successfully"});
       } else {
-        return req.status(404).json("User Not Found");
+        return res.status(404).json({error:"User Not Found"});
       }
     } catch (error) {
       console.error(error.message);
-      return res.status(500).json(error.message);
+      return res.status(500).json({error:error.message});
     }
   } else {
     try {
-      const user = await User.findByIdAndDelete(req.userId);
+      const user = await User.findById(req.userId);
       if (user) {
         await Review.deleteMany({ userId: user._id });
         (await User.find({ managerId: req.userId })).forEach(async (u) => {
@@ -96,15 +97,16 @@ const deleteUser = async (req, res) => {
             await Review.deleteMany({ serviceId: service._id });
             await service.deleteOne();
           });
-          u.deleteOne();
+          await u.deleteOne();
         });
-        return req.status(200).json("User has been deleted successfully");
+        await user.deleteOne();
+        return res.status(200).json({success:"User has been deleted successfully"});
       } else {
-        return req.status(404).json("User Not Found");
+        return res.status(404).json({error:"User Not Found"});
       }
     } catch (error) {
       console.error(error.message);
-      return res.status(501).json(error.message);
+      return res.status(501).json({error:error.message});
     }
   }
 };

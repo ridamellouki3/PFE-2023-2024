@@ -41,6 +41,21 @@ const Messages = () => {
     console.log(conversations)
   })
 
+  const handleClick = async (id) =>{
+    console
+    try{
+    const response = await fetch(`/api/conversations/${id}`,{
+        method : "DELETE"
+      })
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+    }catch(err){
+      console.log(err)
+    }
+  }
+
   return (
     <div className="messages">
               <SideBar/>
@@ -67,17 +82,20 @@ const Messages = () => {
                     <th>{currentUser.role != "Client" ? "Buyer" : "Seller"}</th>
                     <th>Date</th>
                     <th>Last Msg</th>
+                    <th>Delete</th>
                     <th>Action</th>
                   </tr>
                   {conversations.map((conver)=>(
                    
                   <tr className="active" key={conver._id}>
-                    <td>{currentUser.role == "Client" ? conver.serviceProviderId.username : conver.clientId.username}</td>
+                    <td>{currentUser?.role == "Client" ? conver.serviceProviderId.username : conver.clientId.username}</td>
                    
                     <td>{(conver.updatedAt)}</td>
 
                     <td>{(conver.lastMessage)}</td>
-
+                    <td>
+                    <img className="delete" src="./img/delete.png" onClick={()=>handleClick(conver._id)} />
+                    </td>
                     <td>
                       <Link to={`/message/${conver._id}`}>
                         <button>See More</button>

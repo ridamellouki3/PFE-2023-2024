@@ -1,5 +1,6 @@
 const { isValidObjectId } = require("mongoose");
 const Conversation = require("../models/Conversation");
+const Message = require("../models/Message")
 
 const createConversation = async (req, res) => {
   try {
@@ -59,9 +60,25 @@ const getConversations = async (req, res) => {
   }
 };
 
+const deleteConverstion = async (req,res)=>{
+  try{
+    const conversation = await Conversation.findByIdAndDelete( req.params.id)
+    if(conversation){
+      const messages = await Message.deleteMany({conversationId :conversation._id })
+      return res.status(201).json({success : "Conversation deleted successfully !"});
+    }else{
+      return res.status(404).json({error : "No Conversation Found !!"})
+    }
+  }catch(error){
+    console.log(error.message);
+    return res.status(501).json({error : error.message})
+  }
+};
+
 
 module.exports = {
   createConversation,
   getSingleConversation,
   getConversations,
+  deleteConverstion,
 };

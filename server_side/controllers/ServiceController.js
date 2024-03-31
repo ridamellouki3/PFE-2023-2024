@@ -28,7 +28,7 @@ const createService = async (req, res) => {
   
     const newService = new Service({
       ...req.body,
-      userId: ((req.role =='Service Provider')? req.userId : req.body.userId),
+      userId: ((req.body.userId)? req.body.userId : req.userId ),
       categorieId: categorie._id,
       cover: req.file.filename,
     });

@@ -3,6 +3,7 @@ const {
   createConversation,
   getSingleConversation,
   getConversations,
+  deleteConverstion,
 } = require("../controllers/ConversationController");
 const verifyToken = require("../middleware/JWT");
 const router = express.Router();
@@ -111,6 +112,6 @@ const router = express.Router();
 router.post("/", verifyToken, createConversation);
 router.get("/conver/:id", verifyToken, getSingleConversation);
 router.get("/", verifyToken, getConversations);
-
+router.delete("/:id",verifyToken,deleteConverstion)
 
 module.exports = router;

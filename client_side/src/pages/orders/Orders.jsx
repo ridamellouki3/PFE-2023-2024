@@ -66,7 +66,7 @@ const Orders = () => {
       }
       const res = response.json();
 
-      console.log(res.success)
+      console.log(res.serviceProviderId)
 
     } catch (err) {
       setError(err.message);
@@ -194,7 +194,7 @@ return (
 
                <td>
                 <img className="message" src="./img/message.png" onClick={()=>{
-                  (currentUser.role == "Service Provider") ? setNewConv(order.clientId._id) : setNewConv(order.serviceProviderId._id)
+                  (currentUser.role != "Client") ? setNewConv(order.clientId._id) : setNewConv(order.serviceProviderId._id)
                 }} />
               </td>
             </tr>
@@ -203,7 +203,6 @@ return (
           </table>
       </div>
          
-        
        )
      }
     </div>

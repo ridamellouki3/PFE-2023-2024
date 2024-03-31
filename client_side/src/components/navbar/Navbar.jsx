@@ -82,6 +82,9 @@ function Navbar() {
               <Link className="link" to="/telegramAPI">
                 <span>Quick Service</span>
               </Link>
+              <Link className="link" to="/aboutUs">
+              <span>About Us </span>
+              </Link>
             </>
           ):
           currentUser?.role == "Service Provider" || currentUser?.role == "Manager"?
@@ -94,9 +97,7 @@ function Navbar() {
           ):
           (
             <>
-             <Link className="link" to="/aboutUs">
-              <span>About Us </span>
-            </Link>
+            
             </>
           )
          

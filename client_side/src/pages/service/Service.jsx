@@ -108,7 +108,7 @@ function Service() {
           </form> : ""}
                 {success && (
                   <div className="bar success">
-                    <i className="ico">&#10004;</i> {success}
+                    <i className="ico">&#10004;</i> Ordered Successfully
                   </div>
                 )}        
           

@@ -37,13 +37,9 @@ const Message = () => {
     };
     fetchData()
     
-  }, [id]);
+}, [id]);
 
 
-  useEffect(()=>{
-    console.log(messages)
-
-  },[])
 
   
   const handleSubmit = async (e) => {
@@ -65,7 +61,7 @@ const Message = () => {
     }catch(err){
       console.log(err)
     }
-    fetchData();
+    
 
     e.target[0].value=""
 
@@ -78,7 +74,7 @@ const Message = () => {
       <div className="container">
         
         <span className="breadcrumbs">
-          <Link to="/messages">Messages</Link> John Doe
+          <Link to="/messages">Messages</Link> 
         </span>
         <div className="messages">
           { messages.map((msg)=>

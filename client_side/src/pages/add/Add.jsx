@@ -12,6 +12,7 @@ const add = () => {
   const [cover, setCover] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [valid ,setValid] = useState("")
 
 
   const handleImage = (e) => {
@@ -41,6 +42,7 @@ const add = () => {
 
       const json = await response.json();
       console.log(json);
+      setValid(json)
 
       if (!response.ok) {
         setError(json.error);
@@ -126,9 +128,9 @@ useEffect(()=>{
             }}
             ></textarea>
             {error && <div className="bar error">{error} </div>}
-                {success && (
+                {valid && (
                   <div class="bar success">
-                    <i class="ico">&#10004;</i> {success}
+                    <i class="ico">&#10004;</i> {valid}
                   </div>
                 )}
             <button>Create</button>

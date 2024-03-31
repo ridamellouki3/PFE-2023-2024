@@ -67,10 +67,13 @@ function App() {
           element: <Login />,
         },
         {
+          path: "/allServices",
+          element: <AllServices />,
+        },
+        {
           path: "/bootUs",
           element: <BootUs/>,
         },
-      
         {
           path: "/aboutUs",
           element: <AboutUs/>,
@@ -97,10 +100,6 @@ function App() {
     {
       path: "/orders",
       element: <Orders />,
-    },
-    {
-      path: "/allServices",
-      element: <AllServices />,
     },
     {
       path: "/messages",

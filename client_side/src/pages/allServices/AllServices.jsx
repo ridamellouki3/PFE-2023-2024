@@ -20,7 +20,7 @@ function AllServices() {
       try {
         const response = await fetch("/api/services/All-Services",{
           method:'GET'
-        }); // Replace with your actual API endpoint
+        }); 
 
         if (!response.ok) {
           throw new Error(`API request failed with status ${response.status}`);
@@ -30,8 +30,7 @@ function AllServices() {
         const data = await response.json();
          
         setServices(data.services);
-            
-
+          
         console.log(services);
 
 
@@ -64,9 +63,9 @@ function AllServices() {
         <div className="cards">
           { isLoading ? "Loading" : error ? "Somethings Wrong" : 
          (services.length == 0 ? "NO SERVICE YET": services.map((card) => (
-            <ServiceCard key={card._id} item={card} />
-          )))
-          }
+          <ServiceCard key={card._id} item={card} />
+        )))
+        }
         </div>
       </div>
     </div>

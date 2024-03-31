@@ -27,6 +27,24 @@ function SideBarC() {
     }
 
   }  
+
+  const deleteProfile =async (e) =>{
+    e.preventDefault()
+    const response = await fetch('/api/users/delete',{
+      method : "DELETE"
+    })
+
+    const json = await response.json();
+    console.log(json);
+
+    if(!response.ok){
+      console.log(json);
+    }else{
+      localStorage.removeItem("currentUser"); 
+      navigate('/');
+    }
+  }
+
     return (    
         
         <div className="containerr">
@@ -56,6 +74,11 @@ function SideBarC() {
               <li><div className="aC link logout" onClick={logout}>
                 <i className="fas fa-sign-out-alt"></i>
                 <span className="nav-item">Log out</span>
+                </div></li>
+
+                <li className="deleteProfile"><div className="aC link logout" onClick={deleteProfile}>
+                <i className="fas fa-trash " ></i>
+                <span className="nav-item">Delete Profile !!</span>
                 </div></li>
             </ul>
           </nav>

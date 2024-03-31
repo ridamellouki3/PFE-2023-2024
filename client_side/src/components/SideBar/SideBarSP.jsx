@@ -27,6 +27,12 @@ function SideBarSP() {
     }
     
   }
+  const deleteProfile = (e) =>{
+    e.preventDefault()
+    console.log("Delete")
+  }
+
+
     return (    
         
         <div className="containerr">
@@ -67,6 +73,13 @@ function SideBarSP() {
                 <i className="fas fa-sign-out-alt"></i>
                 <span className="nav-item">Log out</span>
                 </div></li>
+
+
+                <li><div className="aC link logout" onClick={deleteProfile}>
+                <i className="fas fa-trash"></i>
+                <span className="nav-item">Delete Profile !!</span>
+                </div></li>
+
             </ul>
           </nav>
       

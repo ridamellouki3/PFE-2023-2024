@@ -123,7 +123,7 @@ router.post('/createUser',verifyToken,upload.single('img'),createUser);
  *       '500':
  *         description: Internal server error
  */
-router.delete('/delete/:id',verifyToken,deleteUser);
+router.delete('/delete',verifyToken,deleteUser);
 /**
  * @swagger
  * /api/users/deleteByManager/{id}:
