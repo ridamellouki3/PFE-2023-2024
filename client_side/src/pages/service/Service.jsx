@@ -46,7 +46,6 @@ function Service() {
 
   const createOrder = async (e) => {
     e.preventDefault()
-   console.log("HHEhEH")
     try {
       const response = await fetch(`/api/orders/create-payment/${id}`,{
         method : "POST",
@@ -77,7 +76,7 @@ function Service() {
       <div className="container">
         <div className="left">
           <span className="breadcrumbs"> </span>
-          <h4>{service.desc}</h4>
+          
           <h1>{service.title}<span className="priceService">{service.price}$</span></h1>
           <div className="user">
             <img
@@ -88,11 +87,11 @@ function Service() {
             <span>{service.userId.username}</span>
             <div className="stars">
 
-            {Array(service.starNumber).fill().map((_, i) => (
+            {Array(!Number(service.totalStars/service.starNumber) ? 0 :service.totalStars/service.starNumber).fill().map((_, i) => (
            <img src="/img/star.png" alt="" key={i} />
               ))}
 
-              <span>{service.starNumber} </span>
+              <span>{!Number(service.totalStars/service.starNumber) ? 0 :service.totalStars/service.starNumber} </span>
             </div>
           </div>
           <Slider slidesToShow={1} arrowsScroll={1} className="slider">

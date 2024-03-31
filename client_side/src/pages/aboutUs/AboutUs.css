@@ -2,7 +2,7 @@
     height: 600px;
     display: flex;
     justify-content: center;
-    background: url(../../../public/img/about.jpg)  ;
+    
     background-size: cover;
     color: white;
     
@@ -10,7 +10,13 @@
       width: 1400px;
       display: flex;
       align-items: center;
-  
+      /* .img{
+        margin-top: 150px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%; 
+      } */
       .left {
         display: flex;
         flex-direction: column;
@@ -24,47 +30,6 @@
             font-weight: 300;
           }
         }
-  
-        .search {
-          background-color: white;
-          border-radius: 5px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          overflow: hidden;
-  
-          .searchInput {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            img {
-              width: 20px;
-              height: 20px;
-              margin: 10px;
-            }
-  
-            input {
-              border: none;
-              outline: none;
-              width:800px ;
-              &::placeholder {
-                color: gray;
-              }
-            }
-          }
-  
-          button {
-            width: 120px;
-            height: 50px;
-            border: none;
-            background-color: rgb(41, 166, 177);
-            color: white;
-            align-self: flex-end;
-            cursor: pointer;
-            color: black;
-          }
-        }
-  
         .popular {
           display: flex;
           align-items: center;
@@ -118,7 +83,7 @@
     }
 
     .side2{
-      width: 700px ;
+      width: 500px ;
      
 
     img{

@@ -6,10 +6,11 @@ const Review = ({review})=> {
   return (
      
     <div className="item">
+        {console.log(review)}
         <div className="user">
           <img
             className="pp"
-            src=  { "http://localhost:4000/"   + review.userId.img}
+            src=  {review.userId.googleId ? review.userId.img :  "http://localhost:4000/" + review.userId.im}
                         alt=""
           /> 
           <div className="info">

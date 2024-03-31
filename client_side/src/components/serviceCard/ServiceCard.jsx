@@ -14,11 +14,11 @@ const ServiceCard =  ({ item }) => {
                        alt="" />
             <span>{item.userId.username}</span>
           </div>
-          {console.log(item)}
-          <p>{item.desc}</p>
+         
+          <p>{item.desc.length < 40 ? item.desc : item.desc.substr(0,40)+"......"}</p>
           <div className="star">
-            <span>{item.starNumber}</span>
-            <span>  {Array(item.starNumber).fill().map((_, i) => (
+            <span>{!Number(item.totalStars/item.starNumber) ? 0 :item.totalStars/item.starNumber}</span>
+            <span>  {Array(!Number(item.totalStars/item.starNumber) ? 0 :item.totalStars/item.starNumber).fill().map((_, i) => (
            <img src="/img/star.png" alt="" key={i} />
               ))}</span>
           </div>
@@ -30,7 +30,7 @@ const ServiceCard =  ({ item }) => {
             <span>STARTING AT</span>
             <h2>
               $ {item.price}
-              <sup>99</sup>
+              
             </h2>
           </div>
         </div>

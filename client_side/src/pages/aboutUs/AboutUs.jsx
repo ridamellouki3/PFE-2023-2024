@@ -3,25 +3,8 @@ import './AboutUs.css'
 function AboutUs() {
   return (
     <>
-    <div className="featuredAbout">
-    <div className="container">
-      <div className="left">
-        
-        <div className="search">
-          
-          
-        </div>
-      
-      </div>
-      <div className="right">
-        <img src="./img/about.jpg" alt="" />
-        
-      </div>
-     
-    </div>
-  </div>
-
     <div className="container2">
+      
       <div className='side1'>
       
       <p className='firstLetter'>L'</p>
@@ -31,7 +14,7 @@ function AboutUs() {
 
       </div>
       <div className='side2'>
-      <img src="./img/about1.png" alt="" />
+      <img src="./img/customer-service.png" alt=""  className='img'/>
 
       </div>
      

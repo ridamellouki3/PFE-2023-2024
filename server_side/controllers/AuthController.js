@@ -13,7 +13,7 @@ const setCookie = (res, token) => {
   res.cookie("accessToken", token, {
     //httpOnly: true,
     secure: true,
-    sameSite: "none",
+    sameSite: "Lax",
   });
 };
 

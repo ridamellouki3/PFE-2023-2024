@@ -77,7 +77,7 @@ function Navbar() {
           <span className="dot"></span>
         </div>
         <div className="links">
-          {currentUser?.role == "Client" ?  (
+          
               <>
               <Link className="link" to="/telegramAPI">
                 <span>Quick Service</span>
@@ -86,25 +86,8 @@ function Navbar() {
                 <span>About Us </span>
                 </Link>
                 </>
-          ):
-          currentUser?.role == "Service Provider" || currentUser?.role == "Manager"?
-          (
-            <>
-            <Link className="link" to="/bootUs">
-              <span>Boot Us</span>
-            </Link>
-             </>
-          ):
-          (
-            <>
-             <Link className="link" to="/aboutUs">
-              <span>About Us </span>
-              </Link>
-            
-            </>
-          )
          
-          }
+          
           {currentUser ? (
             <Link className="link" to="/profile">
               <div className="user">
@@ -124,7 +107,7 @@ function Navbar() {
                 <button>Join</button>
               </Link>
               <a href="/api/auth/google">
-                <img src="./img/google.jpeg" alt="" className="google" />
+                <img src="../img/google.jpeg" alt="" className="google" />
               </a>
             </>
           )}

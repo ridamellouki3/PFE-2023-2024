@@ -80,7 +80,7 @@ const Message = () => {
           { messages.map((msg)=>
             <div className={currentUser._id === msg.userId._id ? "owner item" :"item"} key={msg._id}>
             <img
-              src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
+              src={ msg.userId.googleId ? msg.userId.img :  "http://localhost:4000/" + msg.userId.img }
               alt=""
             />
             <p>

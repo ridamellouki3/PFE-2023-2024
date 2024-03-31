@@ -40,7 +40,7 @@ const getReviews = async (req, res) => {
   try {
     const reviews = await Review.find({ serviceId: req.params.serviceId }).populate({
       path:'userId',
-      select:'username img country createdAt',
+      select:'username img country googleId createdAt',
     });
     return res.status(200).send({reviews:reviews});
   } catch (error) {

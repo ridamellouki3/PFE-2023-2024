@@ -25,7 +25,7 @@ function AllProviders() {
 
         const responseData = await response.json();
         setProviders(responseData.serviceProviders);
-        console.log(providers)
+        console.log(responseData.serviceProviders)
 
       } catch (err) {
         setError(err.message);
@@ -70,7 +70,6 @@ function AllProviders() {
 
   const handelClick =async (e,id)=>{
     e.preventDefault()
-    console.log("Hello "+id)
     setIsLoading(true);
       setError(null);
 

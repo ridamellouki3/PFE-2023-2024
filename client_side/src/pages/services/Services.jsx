@@ -4,25 +4,18 @@ import ServiceCard from "../../components/serviceCard/ServiceCard";
 import { useParams } from "react-router-dom";
 
 function Services() {
-  
   const { id } = useParams(); 
-
-      
   const [services, setServices] = useState([]); 
   const [isLoading, setIsLoading] = useState(false); 
   const [error, setError] = useState(null); 
-  
-
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       setError(null);
-      console.log(id)
-      //65da33c51b372b48dba8ad73
       try {
         const response = await fetch(`/api/services/ServicesByCategorie/${id}`,{
           method:'GET'
-        }); // Replace with your actual API endpoint
+        });
 
         if (!response.ok) {
           throw new Error(`API request failed with status ${response.status}`);
@@ -56,7 +49,7 @@ function Services() {
     <div className="gigs">
       <div className="container">
       <span className="breadcrumbs">Youuuurs Services  </span>
-        <h1>AnyWhere AnyTime</h1>
+        <h1>Any Where AnyTime</h1>
         <p>
           Explore the boundaries of art and technology 
         </p>
