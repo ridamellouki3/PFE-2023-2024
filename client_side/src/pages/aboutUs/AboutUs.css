@@ -100,6 +100,54 @@
     width: 1400px;
     display: flex;
     justify-content: center;
-    margin: 50px auto;
+    margin: 100px auto;
 
+    .side1{
+
+      width: 700px ;
+      display: flex;
+      .others{
+        font-size: 22px ;
+        font-weight: 600;
+        font-family: 'Arial', sans-serif;
+        line-height: 1.9;
+        padding-top: 60px ;
+        
+        }
+      }
+    }
+
+    .side2{
+      width: 700px ;
+     
+
+    img{
+      padding-top: 50px ;
+      width: 900px ;
+    }
+}
+
+.longDesc{
+  width: 1300px;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  margin-top: -50px ;
+  padding-right: 10px ;
+     
+      font-size: 22px ;
+      font-weight: 600;
+      font-family: 'Arial', sans-serif;
+      line-height: 1.9;
+      padding-top: 60px ;
+      
+}
+
+.firstLetter{
+  
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size:100px ;
+  font-weight: bold;
+  color: #2794b0;   
+  
 }

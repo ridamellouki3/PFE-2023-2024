@@ -11,35 +11,33 @@ const Messages = () => {
   const [error, setError] = useState(null);
   const [conversations, setConversations] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      setError(null);
 
-      try {
-        const response = await fetch('/api/conversations')
-        if (!response.ok) {
-          throw new Error(`API request failed with status ${response.status}`);
-        }
+  const fetchData = async () => {
+    setIsLoading(true);
+    setError(null);
 
-        const responseData = await response.json();
-        setConversations(responseData.success);
-
-      } catch (err) {
-        setError(err.message);
-        console.log(err)
-      } finally {
-        setIsLoading(false);
+    try {
+      const response = await fetch('/api/conversations')
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
       }
-    };
 
+      const responseData = await response.json();
+      setConversations(responseData.success);
+
+    } catch (err) {
+      setError(err.message);
+      console.log(err)
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
+  useEffect(() => {
     fetchData();
   }, []);
 
-
-  useEffect(()=>{
-    console.log(conversations)
-  })
 
   const handleClick = async (id) =>{
     console
@@ -53,7 +51,10 @@ const Messages = () => {
 
     }catch(err){
       console.log(err)
+    }finally{
+      fetchData();
     }
+    
   }
 
   return (

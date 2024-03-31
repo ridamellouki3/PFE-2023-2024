@@ -55,10 +55,10 @@ function Services() {
   return (
     <div className="gigs">
       <div className="container">
-        <span className="breadcrumbs">Liverr Graphics & Design </span>
-        <h1>AI Artists</h1>
+      <span className="breadcrumbs">Youuuurs Services  </span>
+        <h1>AnyWhere AnyTime</h1>
         <p>
-          Explore the boundaries of art and technology with  AI artists
+          Explore the boundaries of art and technology 
         </p>
         <div className="menu">
         

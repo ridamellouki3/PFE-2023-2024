@@ -4,19 +4,27 @@ const Message = require("../models/Message")
 
 const createConversation = async (req, res) => {
   try {
-    const newConversation = new Conversation({
-      serviceProviderId:
-        req.role == "Service Provider" ? req.userId : req.body.to,
-      clientId: req.role == "client" ? req.userId : req.body.to,
-      readByServiceProvider: req.role == "Service Provider",
-      readByClient: req.role == "client",
+    const findConversation = await Conversation.find({
+      serviceProviderId:(req.role === "Service Provider" ? req.userId : req.body.to),
+      clientId: (req.role === "Client" ? req.userId : req.body.to ),
     });
-
-    const savedConversation = await newConversation.save();
-    return res.status(201).json({success :savedConversation});
+    if (findConversation.length !== 0) {
+      return res.status(201).json({ success: findConversation });
+    } else {
+      const newConversation = new Conversation({
+        serviceProviderId:
+          req.role === "Service Provider" ? req.userId : req.body.to,
+        clientId: req.role === "Client" ? req.userId : req.body.to,
+        readByServiceProvider: req.role == "Service Provider",
+        readByClient: req.role == "Client",
+      });
+      console.log(newConversation);
+      const savedConversation = await newConversation.save();
+      return res.status(201).json({ success: savedConversation });
+    }
   } catch (err) {
     console.log(err.message);
-    return res.status(500).json({error:err.message});
+    return res.status(500).json({ error: err.message });
   }
 };
 
@@ -49,14 +57,16 @@ const getConversations = async (req, res) => {
       req.role == "Service Provider"
         ? { serviceProviderId: req.userId }
         : { clientId: req.userId }
-    ).sort({ updatedAt: -1 }).populate({
-      path:(req.role == "Service Provider")?("clientId"):('serviceProviderId'),
-      select : " username email gender img country verified "
-    })
-    return res.status(200).send({success:conversations});
+    )
+      .sort({ updatedAt: -1 })
+      .populate({
+        path: req.role == "Service Provider" ? "clientId" : "serviceProviderId",
+        select: " username email gender img country verified ",
+      });
+    return res.status(200).send({ success: conversations });
   } catch (err) {
     console.log(err.message);
-    return res.status(500).json({error:err.message});
+    return res.status(500).json({ error: err.message });
   }
 };
 

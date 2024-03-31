@@ -41,8 +41,9 @@ const add = () => {
       });
 
       const json = await response.json();
-      console.log(json);
-      setValid(json)
+      console.log(json.success);
+      setValid(json.success)
+     
 
       if (!response.ok) {
         setError(json.error);

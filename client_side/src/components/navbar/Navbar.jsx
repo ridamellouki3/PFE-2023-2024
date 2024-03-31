@@ -78,14 +78,14 @@ function Navbar() {
         </div>
         <div className="links">
           {currentUser?.role == "Client" ?  (
-            <>
+              <>
               <Link className="link" to="/telegramAPI">
                 <span>Quick Service</span>
               </Link>
-              <Link className="link" to="/aboutUs">
-              <span>About Us </span>
-              </Link>
-            </>
+                <Link className="link" to="/aboutUs">
+                <span>About Us </span>
+                </Link>
+                </>
           ):
           currentUser?.role == "Service Provider" || currentUser?.role == "Manager"?
           (
@@ -97,6 +97,9 @@ function Navbar() {
           ):
           (
             <>
+             <Link className="link" to="/aboutUs">
+              <span>About Us </span>
+              </Link>
             
             </>
           )
@@ -132,7 +135,7 @@ function Navbar() {
           <hr />
           <div className="menu">
             {categories.map(cat => (
-              <Link key={cat._id} className="link menuLink" to="/">
+              <Link key={cat._id} className="link menuLink" to={`/services/${cat._id}`} >
                 {cat.name}
               </Link>
             ))}
